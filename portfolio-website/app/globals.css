@@ -15,6 +15,7 @@
   --animate-mesh-rotate: mesh-rotate 30s linear infinite;
   --animate-shimmer: shimmer 2s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
+  --animate-scroll: scroll 40s linear infinite;
 }
 
 /* Keyframe definitions */
@@ -41,3 +42,13 @@
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
 }
+
+/* Keyframe for infinite scroll */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+
+
