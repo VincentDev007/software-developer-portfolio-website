@@ -16,7 +16,6 @@ export default function Home() {
         
         {/* Tech Stack Footer - below the panels */}
         <TechStackFooter /> 
-        
       </div>
     </>
   );

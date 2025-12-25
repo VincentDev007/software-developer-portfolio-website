@@ -1,4 +1,16 @@
-export default function ProfileCard() {
+export default function ProfileCard({ compact = false }: { compact?: boolean }) {
+  // Compact version - just name
+  if (compact) {
+    return (
+      <div className="mb-5 px-10 mt-6">
+        <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
+          Vincent Agra
+        </h2>
+      </div>
+    );
+  }
+
+  // Full version - name, title, and image
   return (
     <div className="mb-8 flex items-end justify-between gap-6">
       
@@ -14,8 +26,6 @@ export default function ProfileCard() {
           Software Developer
         </p>
       </div>
-
-
 
       {/* Right side - Profile Image (Circular) */}
       <div className="w-32 h-32 flex-shrink-0 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-lg mr-20">

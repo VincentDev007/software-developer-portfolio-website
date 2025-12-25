@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react';
+interface NavigationProps {
+  activeSection: string;
+  setActiveSection: (section: string) => void;
+}
 
-export default function Navigation() {
+export default function Navigation({ activeSection, setActiveSection }: NavigationProps) {
   // Array of all 5 sections - makes it easy to loop and create buttons
-  const sections = ['about', 'experience', 'projects', 'articles', 'skills'];
-  
-  // Track which section is currently active (starts with 'about')
-  const [activeSection, setActiveSection] = useState('about');
+  const sections = ['about', 'experience', 'projects', 'articles'];
 
   return (
     // Outer container - glass background with rounded pill shape
@@ -18,6 +18,7 @@ export default function Navigation() {
           key={section}
           onClick={() => setActiveSection(section)}
           className={`
+            flex-1
             px-6 py-3 rounded-full font-medium text-sm uppercase tracking-wide
             transition-all duration-300
             ${
