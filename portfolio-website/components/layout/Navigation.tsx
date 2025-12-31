@@ -7,7 +7,7 @@ interface NavigationProps {
 
 export default function Navigation({ activeSection, setActiveSection }: NavigationProps) {
   // Array of all 5 sections - makes it easy to loop and create buttons
-  const sections = ['about', 'experience', 'projects', 'articles'];
+  const sections = ['about', 'experience', 'projects', 'skills'];
 
   return (
     // Outer container - glass background with rounded pill shape
