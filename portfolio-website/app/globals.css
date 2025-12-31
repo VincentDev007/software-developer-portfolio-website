@@ -16,6 +16,7 @@
   --animate-shimmer: shimmer 2s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
   --animate-scroll: scroll 40s linear infinite;
+  --animate-fadeIn: fadeIn 0.4s ease-in-out;
 }
 
 /* Keyframe definitions */
@@ -47,6 +48,18 @@
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+/* Keyframe for fade in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 

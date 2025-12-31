@@ -22,6 +22,7 @@ import ArticlesRight from '../articles/ArticlesRight';
 
 export default function TwoPanel() {
   const [activeSection, setActiveSection] = useState('about');
+  const [selectedExperienceId, setSelectedExperienceId] = useState(10);
  
   return (
     // Grid container - 50/50 split with gap
@@ -69,7 +70,10 @@ export default function TwoPanel() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <ExperienceLeft />
+                <ExperienceLeft 
+                  selectedId={selectedExperienceId}
+                  onSelectExperience={setSelectedExperienceId}
+                />
               </motion.div>
             )}
             {activeSection === 'projects' && (
@@ -125,7 +129,6 @@ export default function TwoPanel() {
 
 
 
-
       >
         
         <div className="flex-1 overflow-y-auto">
@@ -149,7 +152,7 @@ export default function TwoPanel() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <ExperienceRight />
+                <ExperienceRight selectedId={selectedExperienceId} />
               </motion.div>
             )}
             {activeSection === 'projects' && (
