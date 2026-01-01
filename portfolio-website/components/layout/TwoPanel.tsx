@@ -22,6 +22,7 @@ import ProjectsRight from '../projects/ProjectsRight';
 export default function TwoPanel() {
   const [activeSection, setActiveSection] = useState('about');
   const [selectedExperienceId, setSelectedExperienceId] = useState(10);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);  // ← ADD THIS
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);  // ✅ Add this
   const [previousSection, setPreviousSection] = useState('about');     // ✅ Add this
 
@@ -106,7 +107,11 @@ return (
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <ProjectsLeft />
+                <ProjectsLeft 
+                  selectedId={selectedProjectId}
+                  onSelectProject={setSelectedProjectId}
+                />
+
               </motion.div>
             )}
           </AnimatePresence>
@@ -174,7 +179,7 @@ return (
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <ProjectsRight />
+                <ProjectsRight selectedId={selectedProjectId} />
               </motion.div>
             )}
           </AnimatePresence>
