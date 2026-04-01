@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { skills, getSkillsByCategory } from '@/src/data/skills'
+import { skills, getSkillsByCategory } from '@/data/skills'
 
 interface SkillsModalProps {
   isOpen: boolean
@@ -11,38 +11,34 @@ interface SkillsModalProps {
 }
 
 export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
-  // Get skills organized by category
   const groupedSkills = getSkillsByCategory()
-  
-  // Category order for display (without labels)
+
   const categoryOrder: ('language' | 'frontend' | 'backend' | 'database' | 'tools')[] = [
     'language',
-    'frontend', 
+    'frontend',
     'backend',
     'database',
     'tools'
   ]
 
-  // Handle ESC key to close modal
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
         onClose()
       }
     }
-    
+
     window.addEventListener('keydown', handleEsc)
     return () => window.removeEventListener('keydown', handleEsc)
   }, [isOpen, onClose])
 
-  // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
     }
-    
+
     return () => {
       document.body.style.overflow = 'unset'
     }
@@ -52,7 +48,7 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -62,7 +58,6 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
           />
 
-          {/* Modal Container */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -85,7 +80,7 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%)'
               }}
             >
-              {/* Close Button */}
+
               <button
                 onClick={onClose}
                 className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
@@ -93,12 +88,10 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
                 <IoClose size={32} />
               </button>
 
-              {/* Title */}
               <h2 className="text-3xl font-bold text-white mb-8 text-center">
                 Skills & Technologies
               </h2>
 
-              {/* Skills Grid - Grouped by category */}
               <div className="space-y-8">
                 {categoryOrder.map(category => (
                   <div key={category} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">

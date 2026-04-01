@@ -1,4 +1,4 @@
-import { experiences } from '@/src/data/experiences'
+import { experiences } from '@/data/experiences'
 import ExperienceDetail from './ExperienceDetail'
 
 interface ExperienceRightProps {

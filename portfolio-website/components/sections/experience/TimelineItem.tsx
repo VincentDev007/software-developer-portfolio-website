@@ -1,28 +1,28 @@
 interface TimelineItemProps {
   id: number
   institution: string
-  isProject: boolean  // true if this is a nested project item
-  isActive: boolean   // true if this item is currently selected
+  isProject: boolean
+  isActive: boolean
   onClick: () => void
 }
 
-export default function TimelineItem({ 
-  id, 
-  institution, 
-  isProject, 
-  isActive, 
-  onClick 
+export default function TimelineItem({
+  id,
+  institution,
+  isProject,
+  isActive,
+  onClick
 }: TimelineItemProps) {
-  
+
   return (
-    <div 
+    <div
       className={`
         cursor-pointer transition-all duration-300
         ${isProject ? 'pl-5 mb-2' : 'mb-3'}
       `}
       onClick={onClick}
     >
-      {/* Milestone - larger, bold text */}
+
       {!isProject && (
         <div
           className={`
@@ -34,7 +34,6 @@ export default function TimelineItem({
         </div>
       )}
 
-      {/* Project - smaller, with arrow, indented */}
       {isProject && (
         <div
           className={`

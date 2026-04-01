@@ -1,10 +1,9 @@
 import React from 'react'
 
-// Import icons from react-icons library
-import { 
+import {
   SiJavascript,
   SiTypescript,
-  SiPython,          // ✅ Use SiCsharp (it does exist, my earlier correction was wrong)
+  SiPython,
   SiReact,
   SiNextdotjs,
   SiVuedotjs,
@@ -19,9 +18,8 @@ import {
   SiDocker,
   SiVercel,
 } from 'react-icons/si'
-import { FaGitAlt, FaJava } from 'react-icons/fa'  // ✅ Java comes from Font Awesome
+import { FaGitAlt, FaJava } from 'react-icons/fa'
 
-// Define the Skill interface - this is the structure for each skill object
 export interface Skill {
   id: number
   name: string
@@ -29,9 +27,7 @@ export interface Skill {
   category: 'language' | 'frontend' | 'backend' | 'database' | 'tools'
 }
 
-// Array of all your skills - this is your single source of truth
 export const skills: Skill[] = [
-  // LANGUAGES
   {
     id: 1,
     name: 'JavaScript',
@@ -53,11 +49,10 @@ export const skills: Skill[] = [
   {
     id: 5,
     name: 'Java',
-    icon: <FaJava className="w-12 h-12 text-red-500" />,  // ✅ Changed to FaJava
+    icon: <FaJava className="w-12 h-12 text-red-500" />,
     category: 'language'
   },
 
-  // FRONTEND
   {
     id: 6,
     name: 'React',
@@ -83,7 +78,6 @@ export const skills: Skill[] = [
     category: 'frontend'
   },
 
-  // BACKEND
   {
     id: 10,
     name: 'Node.js',
@@ -109,7 +103,6 @@ export const skills: Skill[] = [
     category: 'backend'
   },
 
-  // DATABASE
   {
     id: 14,
     name: 'PostgreSQL',
@@ -129,7 +122,6 @@ export const skills: Skill[] = [
     category: 'database'
   },
 
-  // TOOLS
   {
     id: 17,
     name: 'Git',
@@ -150,8 +142,6 @@ export const skills: Skill[] = [
   },
 ]
 
-// Helper function to get skills organized by category
-// This returns an object where each key is a category and value is array of skills
 export function getSkillsByCategory() {
   return {
     language: skills.filter(skill => skill.category === 'language'),

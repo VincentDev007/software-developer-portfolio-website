@@ -11,7 +11,6 @@ export interface Experience {
 }
 
 export const experiences: Experience[] = [
-  // 2025 - Cerebra
   {
     id: 10,
     icon: 'C',
@@ -22,7 +21,6 @@ export const experiences: Experience[] = [
     year: 2025,
     type: 'milestone'
   },
-  // 2025 - Sydny
   {
     id: 11,
     icon: 'S',
@@ -33,7 +31,6 @@ export const experiences: Experience[] = [
     year: 2025,
     type: 'milestone'
   },
-  // 2024 - NSCC IT Programming
   {
     id: 6,
     icon: 'N',
@@ -66,7 +63,6 @@ export const experiences: Experience[] = [
     type: 'project',
     parentId: 6
   },
-  // 2023 - NSCC IT Programming
   {
     id: 7,
     icon: 'N',
@@ -99,7 +95,6 @@ export const experiences: Experience[] = [
     type: 'project',
     parentId: 7
   },
-  // 2022 - Started NSCC
   {
     id: 8,
     icon: 'N',
@@ -123,10 +118,9 @@ export const experiences: Experience[] = [
   }
 ]
 
-// Helper function to get experiences grouped by year
 export function getExperiencesByYear() {
   const years = Array.from(new Set(experiences.map(exp => exp.year))).sort((a, b) => b - a)
-  
+
   return years.map(year => ({
     year,
     milestones: experiences.filter(exp => exp.year === year && exp.type === 'milestone'),

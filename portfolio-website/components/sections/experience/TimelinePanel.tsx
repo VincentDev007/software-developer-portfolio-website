@@ -1,4 +1,4 @@
-import { getExperiencesByYear } from '@/src/data/experiences'
+import { getExperiencesByYear } from '@/data/experiences'
 import TimelineYear from './TimelineYear'
 
 interface TimelinePanelProps {
@@ -7,12 +7,11 @@ interface TimelinePanelProps {
 }
 
 export default function TimelinePanel({ selectedId, onSelectExperience }: TimelinePanelProps) {
-  // Get all experiences organized by year
   const yearData = getExperiencesByYear()
 
   return (
     <div className="relative flex justify-center">
-      {/* Scrollable container */}
+
       <div
         className="max-h-[600px] overflow-y-auto overflow-x-hidden px-10 py-10 w-full max-w-2xl"
         style={{
@@ -20,9 +19,9 @@ export default function TimelinePanel({ selectedId, onSelectExperience }: Timeli
           scrollbarColor: 'rgba(167, 139, 250, 0.3) transparent'
         }}
       >
-        {/* Content wrapper with vertical line */}
+
         <div className="relative">
-          {/* Vertical timeline line - stretches with content */}
+
           <div
             className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2"
             style={{
@@ -30,7 +29,6 @@ export default function TimelinePanel({ selectedId, onSelectExperience }: Timeli
             }}
           />
 
-          {/* Render all year sections */}
           {yearData.map(({ year, milestones, projects }) => (
             <TimelineYear
               key={year}
@@ -44,7 +42,6 @@ export default function TimelinePanel({ selectedId, onSelectExperience }: Timeli
         </div>
       </div>
 
-      {/* Custom scrollbar styles */}
       <style jsx>{`
         div::-webkit-scrollbar {
           width: 6px;

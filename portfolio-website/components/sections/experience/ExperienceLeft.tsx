@@ -11,7 +11,7 @@ export default function ExperienceLeft({ selectedId, onSelectExperience }: Exper
       <p className="text-black/50 text-xs uppercase tracking-wider text-center mb-8">
         Experience Timeline
       </p>
-      <TimelinePanel 
+      <TimelinePanel
         selectedId={selectedId}
         onSelectExperience={onSelectExperience}
       />
