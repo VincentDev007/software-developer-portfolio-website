@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vincent Agra — Software Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Geist', sans-serif;
+      background: #d1d5db;
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── App ── */
+    #app {
+      width: 100%; max-width: 1600px;
+      margin: 0 auto; padding: 32px 40px 0;
+      height: 100vh; display: flex; flex-direction: column;
+    }
+
+    /* ── Nav ── */
+    #nav-pills {
+      border-radius: 9999px; padding: 6px;
+      display: flex; gap: 6px;
+      flex-shrink: 0; margin-bottom: 24px;
+      align-self: flex-start;
+    }
+    .nav-btn {
+      padding: 10px 20px; border-radius: 9999px;
+      font-weight: 500; font-size: 12px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      border: none; cursor: pointer; transition: all 0.2s;
+      background: transparent; color: rgba(0,0,0,0.5);
+      font-family: 'Geist', sans-serif;
+    }
+    .nav-btn:hover { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.8); }
+    .nav-btn.active { background: white; color: #111827; box-shadow: 0 1px 4px rgba(0,0,0,0.12); font-weight: 600; }
+
+    /* ── Glass ── */
+    .glass {
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      box-shadow:
+        0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15),
+        0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15),
+        0 16px 16px rgba(0,0,0,0.15),
+        inset 0 2px 8px rgba(255,255,255,0.3),
+        inset 0 -2px 8px rgba(0,0,0,0.1);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+    }
+
+    /* ── Two panel ── */
+    #two-panel {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px; flex: 1; min-height: 0;
+      margin-bottom: 0;
+    }
+
+    /* ── LEFT PANEL — one long scroll ── */
+    #left-panel {
+      overflow-y: auto; scrollbar-width: none;
+      min-height: 0; padding-right: 8px;
+    }
+    #left-panel::-webkit-scrollbar { display: none; }
+
+    /* About block */
+    #left-about {
+      padding-bottom: 72px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 72px;
+    }
+    #avatar {
+      width: 76px; height: 76px; border-radius: 9999px;
+      background: linear-gradient(135deg, #818cf8, #a855f7);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2); margin-bottom: 24px;
+    }
+    #avatar svg { width: 38px; height: 38px; fill: white; }
+    #left-about h1 {
+      font-size: 58px; font-weight: 800; color: #111827;
+      letter-spacing: -0.03em; line-height: 1.0; margin-bottom: 10px;
+    }
+    #left-about .subtitle {
+      font-size: 16px; color: #6b7280; font-weight: 500; margin-bottom: 22px;
+    }
+    .social-row { display: flex; gap: 10px; margin-bottom: 28px; }
+    .social-link {
+      width: 38px; height: 38px; display: flex;
+      align-items: center; justify-content: center;
+      border-radius: 8px; text-decoration: none; color: #374151;
+      transition: all 0.2s; font-size: 17px;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.3);
+    }
+    .social-link:hover { background: rgba(255,255,255,0.6); transform: translateY(-3px); }
+    .left-bio p {
+      color: #374151; line-height: 1.8; margin-bottom: 14px;
+      font-size: 15px; max-width: 480px;
+    }
+    .left-bio p:last-child { margin-bottom: 0; }
+
+    /* Projects / Blog blocks */
+    #left-projects {
+      padding-bottom: 72px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 72px;
+    }
+    #left-devblog { padding-bottom: 60px; }
+
+    .left-section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #9ca3af; margin-bottom: 18px;
+    }
+
+    /* Cards */
+    .card {
+      display: flex; flex-direction: column; gap: 6px;
+      padding: 14px 16px; border-radius: 12px;
+      margin-bottom: 10px; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
+      background: transparent; border: 1.5px solid rgba(0,0,0,0.07); opacity: 0.72;
+    }
+    .card:hover { background: rgba(255,255,255,0.4); opacity: 1; transform: translateX(5px); border-color: rgba(0,0,0,0.12); }
+    .card.selected { background: rgba(255,255,255,0.5); border-color: rgba(0,0,0,0.18); opacity: 1; transform: translateX(5px); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .card-tag {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 3px 8px; border-radius: 9999px;
+      background: rgba(0,0,0,0.06); color: #374151;
+    }
+    .card-meta { font-size: 11px; color: #9ca3af; }
+    .card h3 { font-size: 13px; font-weight: 600; color: #111827; line-height: 1.4; }
+    .card p  { font-size: 12px; color: #6b7280; line-height: 1.5; }
+    .card-readtime { font-size: 11px; color: #9ca3af; }
+
+    /* ── RIGHT PANEL ── */
+    #right-panel {
+      border-radius: 24px; padding: 32px;
+      display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+    }
+    #right-scroll {
+      flex: 1; overflow-y: auto;
+      scrollbar-width: none; min-height: 0;
+    }
+    #right-scroll::-webkit-scrollbar { display: none; }
+
+    /* Right sections */
+    .rp-section { display: none; height: 100%; flex-direction: column; }
+    .rp-section.active { display: flex; animation: fadeUp 0.3s ease forwards; }
+
+    /* About right */
+    #rp-about h2 { font-size: 26px; font-weight: 700; color: #111827; margin-bottom: 20px; }
+    #rp-about p  { color: #374151; line-height: 1.78; margin-bottom: 14px; font-size: 15px; }
+    #rp-about p:last-child { margin-bottom: 0; }
+
+    /* Project detail */
+    #project-placeholder {
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; opacity: 0.5; gap: 12px;
+    }
+    #project-placeholder .icon { font-size: 44px; }
+    #project-placeholder p { font-size: 15px; color: #374151; }
+    #project-detail { display: none; flex-direction: column; height: 100%; }
+    #project-detail-inner { display: flex; flex-direction: column; height: 100%; }
+    .detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+    .detail-title-block { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+    #detail-title { font-size: 22px; font-weight: 700; color: #111827; letter-spacing: -0.02em; line-height: 1.2; }
+    #detail-one-liner { font-size: 13px; color: #4b5563; line-height: 1.6; }
+    .detail-emoji {
+      width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px;
+      background: rgba(255,255,255,0.25); border: 1.5px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .detail-demo {
+      width: 100%; height: 155px; border-radius: 12px;
+      background: rgba(0,0,0,0.06); border: 1.5px solid rgba(255,255,255,0.2);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px;
+    }
+    .detail-demo-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.45; }
+    .detail-demo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+    }
+    .detail-demo-label { font-size: 12px; color: #374151; font-weight: 500; }
+    .detail-divider { height: 1px; background: rgba(255,255,255,0.25); margin-bottom: 13px; }
+    .detail-section { margin-bottom: 13px; }
+    .detail-section-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 5px;
+    }
+    .detail-section-text { font-size: 13px; color: #374151; line-height: 1.7; }
+    .detail-section-text em {
+      font-style: normal; background: rgba(99,102,241,0.12);
+      color: #4338ca; border-radius: 4px; padding: 1px 5px;
+    }
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .stack-tag {
+      font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 7px;
+      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: #1f2937;
+    }
+    .detail-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 16px; }
+    .detail-btn {
+      padding: 9px 18px; background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.35); border-radius: 10px;
+      font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+      font-family: 'Geist', sans-serif; color: #111827;
+      display: flex; align-items: center; gap: 6px; text-decoration: none;
+    }
+    .detail-btn:hover { background: rgba(255,255,255,0.32); }
+    .detail-btn-primary { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); color: #3730a3; }
+    .detail-btn-primary:hover { background: rgba(99,102,241,0.25); }
+
+    /* Blog detail */
+    #blog-placeholder {
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; opacity: 0.5; gap: 12px;
+    }
+    #blog-placeholder .icon { font-size: 44px; }
+    #blog-placeholder p { font-size: 15px; color: #374151; }
+    #blog-detail { display: none; flex-direction: column; height: 100%; }
+    #blog-detail-inner { display: flex; flex-direction: column; height: 100%; }
+    .blog-detail-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .blog-detail-tag {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 3px 10px; border-radius: 9999px; background: rgba(255,255,255,0.2); color: #374151;
+    }
+    .blog-detail-date, .blog-detail-readtime { font-size: 11px; color: #9ca3af; }
+    #blog-detail-title {
+      font-size: 24px; font-weight: 700; color: #111827;
+      letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 18px;
+    }
+    .blog-detail-body { font-size: 14px; color: #374151; line-height: 1.85; flex: 1; }
+    .blog-detail-body p { margin-bottom: 14px; }
+    .blog-detail-body p:last-child { margin-bottom: 0; }
+    .blog-detail-body h4 { font-size: 14px; font-weight: 700; color: #111827; margin: 20px 0 8px; }
+    .blog-detail-body code {
+      font-family: 'Courier New', monospace; font-size: 12px;
+      background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; color: #1f2937;
+    }
+    .blog-detail-body pre {
+      background: rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px; padding: 14px; margin: 14px 0; overflow-x: auto;
+    }
+    .blog-detail-body pre code { background: none; padding: 0; font-size: 12px; line-height: 1.7; }
+
+    /* Skills overlay */
+    #skills-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px); z-index: 50;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    #skills-overlay.open { opacity: 1; pointer-events: all; }
+    #skills-modal {
+      border-radius: 24px; padding: 40px; max-width: 900px; width: 100%;
+      max-height: 90vh; overflow-y: auto; position: relative;
+      transform: scale(0.9); transition: transform 0.3s; scrollbar-width: none;
+    }
+    #skills-overlay.open #skills-modal { transform: scale(1); }
+    #skills-modal::-webkit-scrollbar { display: none; }
+    #skills-modal h2 { font-size: 26px; font-weight: 700; color: white; margin-bottom: 40px; text-align: center; }
+    #close-skills {
+      position: absolute; top: 24px; right: 24px;
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.7); font-size: 28px; line-height: 1; transition: color 0.2s;
+    }
+    #close-skills:hover { color: white; }
+    .skills-category { margin-bottom: 32px; }
+    .skills-category-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 16px;
+    }
+    .skills-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .skill-item {
+      width: 96px; display: flex; flex-direction: column; align-items: center;
+      padding: 16px 8px; border-radius: 12px;
+      background: rgba(255,255,255,0.05); transition: background 0.2s;
+    }
+    .skill-item:hover { background: rgba(255,255,255,0.12); }
+    .skill-icon { font-size: 32px; margin-bottom: 8px; }
+    .skill-name { font-size: 12px; color: rgba(255,255,255,0.8); text-align: center; font-weight: 500; }
+
+    /* Tech footer */
+    #tech-footer { width: 100%; overflow: hidden; padding: 18px 0; flex-shrink: 0; }
+    #tech-scroll { display: flex; gap: 48px; animation: tickerScroll 40s linear infinite; width: max-content; }
+    .tech-item { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .tech-item span { font-size: 13px; font-weight: 500; color: #374151; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Nav -->
+  <div id="nav-pills" class="glass">
+    <button class="nav-btn active" data-section="about">About</button>
+    <button class="nav-btn" data-section="projects">Projects</button>
+    <button class="nav-btn" data-section="dev blog">Dev Blog</button>
+    <button class="nav-btn" data-section="skills">Skills</button>
+  </div>
+
+  <!-- Two panel -->
+  <div id="two-panel">
+
+    <!-- LEFT PANEL — one long scrollable page -->
+    <div id="left-panel">
+
+      <!-- About -->
+      <div id="left-about" data-section="about">
+        <div id="avatar">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <h1>Vincent<br>Agra</h1>
+        <div class="subtitle">Software Developer — Nova Scotia</div>
+        <div class="social-row">
+          <a href="https://github.com/VincentDev007" target="_blank" class="social-link"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/vincent-agra-329648264/" target="_blank" class="social-link"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="mailto:vincentagra@email.com" class="social-link"><i class="fa-solid fa-envelope"></i></a>
+          <a href="tel:+19025232711" class="social-link"><i class="fa-solid fa-phone"></i></a>
+        </div>
+        <div class="left-bio">
+          <p>I'm a software developer based in Nova Scotia, originally from the Philippines. I got into coding at 22 and haven't stopped building since — from backend systems to AI-powered desktop tools.</p>
+          <p>What pulls me most is the backend — the logic, the systems, the way things actually work under the hood. I'm working toward a software internship where I can go deep on backend work and keep building things that matter.</p>
+          <p>Outside of code, I'm a filmmaker. I approach UI the way a cinematographer approaches a frame — composition matters, and what you leave out matters as much as what you put in.</p>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div id="left-projects" data-section="projects">
+        <div class="left-section-label">Projects</div>
+        <div id="project-cards"></div>
+      </div>
+
+      <!-- Dev Blog -->
+      <div id="left-devblog" data-section="dev blog">
+        <div class="left-section-label">Dev Blog</div>
+        <div id="blog-cards"></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL — glass, reacts to left scroll -->
+    <main id="right-panel" class="glass">
+      <div id="right-scroll">
+
+        <!-- About -->
+        <div id="rp-about" class="rp-section active">
+          <h2>About Me</h2>
+          <p>I do the full software development lifecycle, but what pulls me most is the backend — the logic, the systems, the way things actually work under the hood. That curiosity started before I ever wrote a line of code.</p>
+          <p>One of my projects, Sydny, is a local desktop voice assistant powered by Llama — built entirely from scratch. No cloud, no subscriptions, no API keys. Just a model running on local hardware, a microphone, and a lot of Python.</p>
+          <p>Outside of code, I'm a filmmaker. Travel videos, music videos, short films. It bleeds into how I think about interfaces — I approach UI the way a cinematographer approaches a frame.</p>
+          <p>I got into programming at 22 with no CS background — just YouTube tutorials and a lot of frustration. Moving from the Philippines to Nova Scotia gave me the push I needed to learn something practical. What I didn't expect was how deep the rabbit hole would go.</p>
+          <p>The shift that changed everything: I stopped asking "how do I do X" and started asking "why does X work this way." That's when I stopped feeling like someone who could type code and started feeling like a developer.</p>
+          <p>Right now I'm working toward a software internship where I can go deep on backend work, contribute to a real codebase, and keep building things that matter. If that sounds like your team, I'd love to talk.</p>
+        </div>
+
+        <!-- Projects -->
+        <div id="rp-projects" class="rp-section">
+          <div id="project-placeholder">
+            <div class="icon">📂</div>
+            <p>Select a project</p>
+          </div>
+          <div id="project-detail">
+            <div id="project-detail-inner">
+              <div class="detail-header">
+                <div class="detail-title-block">
+                  <div id="detail-title"></div>
+                  <div id="detail-one-liner"></div>
+                </div>
+                <div class="detail-emoji" id="detail-emoji"></div>
+              </div>
+              <div class="detail-demo" id="detail-demo">
+                <div class="detail-demo-placeholder">
+                  <div class="detail-demo-icon">▶</div>
+                  <div class="detail-demo-label">Demo coming soon</div>
+                </div>
+              </div>
+              <div class="detail-divider"></div>
+              <div class="detail-section">
+                <div class="detail-section-label">Your role</div>
+                <div class="detail-section-text" id="detail-role"></div>
+              </div>
+              <div class="detail-divider"></div>
+              <div class="detail-section">
+                <div class="detail-section-label">What was hard</div>
+                <div class="detail-section-text" id="detail-challenge"></div>
+              </div>
+              <div class="detail-divider"></div>
+              <div class="detail-section">
+                <div class="detail-section-label">Stack</div>
+                <div class="stack-tags" id="detail-stack"></div>
+              </div>
+              <div class="detail-actions" id="detail-actions"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blog -->
+        <div id="rp-blog" class="rp-section">
+          <div id="blog-placeholder">
+            <div class="icon">✍️</div>
+            <p>Select a post</p>
+          </div>
+          <div id="blog-detail">
+            <div id="blog-detail-inner">
+              <div class="blog-detail-meta">
+                <span id="blog-detail-tag" class="blog-detail-tag"></span>
+                <span id="blog-detail-date" class="blog-detail-date"></span>
+                <span id="blog-detail-readtime" class="blog-detail-readtime"></span>
+              </div>
+              <div id="blog-detail-title"></div>
+              <div id="blog-detail-body" class="blog-detail-body"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Tech footer -->
+  <div id="tech-footer">
+    <div id="tech-scroll"></div>
+  </div>
+
+</div>
+
+<!-- Skills modal -->
+<div id="skills-overlay">
+  <div id="skills-modal" class="glass">
+    <button id="close-skills">&times;</button>
+    <h2>Skills &amp; Technologies</h2>
+    <div id="skills-grid"></div>
+  </div>
+</div>
+
+<script>
+  // ── Data ──────────────────────────────────────────────────────────────────
+
+  const projects = [
+    {
+      id: 'sydny', title: 'Sydny', emoji: '🤖',
+      shortDesc: 'Fully offline AI voice assistant running Llama locally on your machine.',
+      oneLiner: 'A local AI voice assistant — no cloud, no subscriptions. Llama, Whisper, and Python on your own hardware.',
+      role: 'Solo project — designed the full architecture from model selection to the streaming TTS pipeline and FastAPI backend.',
+      challenge: 'Latency was brutal. Whisper + Llama + TTS added up to 4-5 seconds of silence. Fixed it by streaming tokens and queuing TTS chunks in parallel so Sydny starts speaking before it finishes thinking.',
+      tech: ['Python', 'FastAPI', 'Llama 3', 'Whisper', 'SQLAlchemy'],
+      demo: null, github: 'https://github.com/VincentDev007',
+    },
+    {
+      id: 'ride-scope', title: 'Ride Scope', emoji: '🚗',
+      shortDesc: 'Vehicle tracking and analytics platform for ride-sharing fleets.',
+      oneLiner: 'Track and analyze ride-sharing fleets in real time — GPS positions, trip history, and driver metrics in one place.',
+      role: 'Solo project — built end to end, from the PostgreSQL schema to the React dashboard and Google Maps integration.',
+      challenge: 'Real-time GPS updates were hammering the database on every ping. Fixed it by batching writes every 2 seconds and serving live positions from an in-memory store.',
+      tech: ['Next.js', 'Node.js', 'PostgreSQL', 'Google Maps API', 'Chart.js'],
+      demo: null, github: 'https://github.com/VincentDev007',
+    },
+    {
+      id: 'weather-tracker', title: 'Weather Tracker', emoji: '☁️',
+      shortDesc: 'Real-time weather app with 5-day forecasts and location search.',
+      oneLiner: 'Search any city and get real-time weather plus a 5-day forecast — built around the OpenWeather API.',
+      role: 'Solo project — built the full app including the API integration, UI layout, and responsive styling.',
+      challenge: 'OpenWeather returns Unix timestamps. Converting to readable local times across timezones required understanding JS Date offsets properly rather than guessing.',
+      tech: ['React', 'TypeScript', 'Tailwind CSS', 'OpenWeather API'],
+      demo: null, github: 'https://github.com/VincentDev007',
+    },
+    {
+      id: 'contacts-app', title: 'Contacts App', emoji: '📇',
+      shortDesc: 'Contact management with real-time search, filtering, and cloud sync.',
+      oneLiner: 'Full CRUD contacts manager with real-time search, category filtering, and Firebase cloud sync across devices.',
+      role: 'Solo project — owned the full stack: Firebase setup, real-time sync logic, and the Material UI component layer.',
+      challenge: 'Firebase listeners fire on every change, causing search to flicker mid-type. Fixed by debouncing the input and only re-querying after the user pauses.',
+      tech: ['React', 'Firebase', 'Material UI', 'TypeScript'],
+      demo: null, github: 'https://github.com/VincentDev007',
+    },
+    {
+      id: 'budget-tracker', title: 'Budget Tracker', emoji: '💰',
+      shortDesc: 'Personal finance app with monthly breakdowns and trend charts.',
+      oneLiner: 'Log income and expenses, see where money goes — monthly category breakdowns and visual trends.',
+      role: 'Solo project — built the React frontend, Express REST API, and PostgreSQL schema including recurring transaction logic.',
+      challenge: 'Recurring transactions needed to auto-generate entries without duplicating data. Solved with a scheduled job that checks a recurrence table and inserts at the start of each billing cycle.',
+      tech: ['React', 'Express', 'PostgreSQL', 'Chart.js', 'Node.js'],
+      demo: null, github: 'https://github.com/VincentDev007',
+    },
+    {
+      id: 'devlog', title: 'DevLog', emoji: '📝',
+      shortDesc: 'Terminal-based dev journal with tagging and full-text search.',
+      oneLiner: 'Write dev journal entries in Markdown from your terminal, tag them, and find anything instantly.',
+      role: 'Solo project — built the CLI, markdown parser, SQLite storage layer, and full-text search index from scratch.',
+      challenge: 'Full-text search across thousands of entries needed to feel instant. SQLite FTS5 handled it, but getting ranking right — surfacing recent and tagged entries first — required tuning BM25 weights manually.',
+      tech: ['Python', 'SQLite', 'Click', 'Markdown'],
+      demo: null, github: 'https://github.com/VincentDev007',
+    },
+  ];
+
+  const skills = [
+    { name: 'JavaScript', icon: '🟨', category: 'language' },
+    { name: 'TypeScript', icon: '🔷', category: 'language' },
+    { name: 'Python',     icon: '🐍', category: 'language' },
+    { name: 'Java',       icon: '☕', category: 'language' },
+    { name: 'React',      icon: '⚛️',  category: 'frontend' },
+    { name: 'Next.js',    icon: '▲',  category: 'frontend' },
+    { name: 'Vue',        icon: '💚', category: 'frontend' },
+    { name: 'Angular',    icon: '🔴', category: 'frontend' },
+    { name: 'Node.js',    icon: '🟢', category: 'backend' },
+    { name: 'Express',    icon: '🚂', category: 'backend' },
+    { name: 'FastAPI',    icon: '⚡', category: 'backend' },
+    { name: '.NET',       icon: '🔵', category: 'backend' },
+    { name: 'PostgreSQL', icon: '🐘', category: 'database' },
+    { name: 'MongoDB',    icon: '🍃', category: 'database' },
+    { name: 'Firebase',   icon: '🔥', category: 'database' },
+    { name: 'Git',        icon: '🔀', category: 'tools' },
+    { name: 'Docker',     icon: '🐳', category: 'tools' },
+    { name: 'Vercel',     icon: '▲',  category: 'tools' },
+  ];
+
+  const blogPosts = [
+    {
+      id: 'building-sydny', tag: 'AI / Backend', date: 'June 12, 2025', readTime: '5 min read',
+      title: 'Building Sydny: A Local Voice Assistant from Scratch',
+      summary: 'How I built a fully offline AI voice assistant with Llama, Whisper, and Python.',
+      body: `<p>Sydny started as a question: what would it take to build an AI assistant that runs entirely on your own machine? No API keys, no monthly bills, no data leaving your laptop.</p>
+<h4>The Stack</h4>
+<p>Llama 3 via <code>llama.cpp</code>, OpenAI Whisper for speech-to-text, <code>pyttsx3</code> for TTS output, wrapped in FastAPI.</p>
+<h4>The Hard Parts</h4>
+<p>Latency. Whisper + Llama + TTS adds up fast. I ended up streaming tokens from the model and queuing TTS chunks so Sydny starts speaking before it finishes thinking.</p>
+<p>Context management was the other challenge. Fixed context window meant building a rolling summary system that compresses older history to keep memory relevant.</p>
+<h4>What I Learned</h4>
+<p>Building offline AI forces you to understand what you're actually running. Quantization levels, memory constraints, prompt engineering at a deeper level. Most educational project I've worked on.</p>`
+    },
+    {
+      id: 'fastapi-sqlalchemy', tag: 'Backend', date: 'May 28, 2025', readTime: '4 min read',
+      title: 'FastAPI + SQLAlchemy: What Nobody Tells You About Sessions',
+      summary: 'The session lifecycle tripped me up for weeks. Here\'s what I wish I knew earlier.',
+      body: `<p>When I started with SQLAlchemy + FastAPI, sessions seemed simple. Then things started breaking — stale data, detached instance errors, connections not closing.</p>
+<h4>The Session is Not a Cache</h4>
+<p>The session is an <em>identity map</em>. SQLAlchemy tracks every object loaded. Sessions shouldn't live longer than a single request.</p>
+<h4>The Pattern That Fixed It</h4>
+<pre><code>def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()</code></pre>
+<p>Every route gets <code>db: Session = Depends(get_db)</code> — a fresh session per request, guaranteed cleanup.</p>
+<h4>DetachedInstanceError</h4>
+<p>Accessing a lazy-loaded relationship after the session closes throws this. Fix: eager loading with <code>joinedload()</code>, or access everything before the session closes.</p>`
+    },
+    {
+      id: 'nova-scotia', tag: 'Personal', date: 'April 15, 2025', readTime: '3 min read',
+      title: 'Starting to Code at 22, Far from Home',
+      summary: 'Moving from the Philippines to Nova Scotia. What that first year of coding actually looked like.',
+      body: `<p>I didn't grow up wanting to be a software developer. I grew up wanting to make films. But when I moved to Nova Scotia I needed something practical. I started watching HTML tutorials at 22.</p>
+<h4>The Learning Curve Is Real</h4>
+<p>The first months were humbling. I could follow tutorials but the moment I tried to build something without one, I'd freeze. That gap between following along and actually building took a long time to close.</p>
+<p>What helped: building things I actually cared about. Not todo apps. A weather tracker, a contacts manager, eventually Sydny. When the project matters, you push through the frustration.</p>
+<h4>What Changed</h4>
+<p>Six months in, something clicked. I stopped Googling "how do I do X" and started asking "why does X work this way." That shift is when I started feeling like a developer.</p>`
+    },
+    {
+      id: 'zustand', tag: 'Frontend', date: 'March 3, 2025', readTime: '4 min read',
+      title: 'Why I Switched from useState Spaghetti to Zustand',
+      summary: 'State management doesn\'t have to be painful. Zustand fixed problems I didn\'t know I was causing.',
+      body: `<p>I managed state with <code>useState</code> and <code>useContext</code> until I was threading props through components that didn't even use them. Prop drilling sneaks up on you.</p>
+<h4>What Zustand Is</h4>
+<p>A store that lives outside the React tree. Any component can read or write directly. No providers, no reducers, no boilerplate.</p>
+<pre><code>const useStore = create((set) => ({
+  user: null,
+  setUser: (u) => set({ user: u }),
+}))</code></pre>
+<h4>The Real Benefit</h4>
+<p>Components only re-render when their subscribed slice changes. With Context, any change re-renders everything. For Sydny's UI with constant state updates, that difference is huge.</p>`
+    },
+    {
+      id: 'glassmorphism', tag: 'Frontend', date: 'February 10, 2025', readTime: '3 min read',
+      title: 'Getting Glassmorphism Right — What Most Tutorials Miss',
+      summary: 'backdrop-filter alone isn\'t enough. The background matters as much as the glass.',
+      body: `<p>Everyone reaches for <code>backdrop-filter: blur()</code>. But without the right background, it just looks flat. Glass needs something interesting to blur.</p>
+<h4>The Background Problem</h4>
+<p>Flat grey + blur = blurred grey. Glass needs visual noise: a gradient, coloured blobs, something with contrast. The effect only works when there's something to refract.</p>
+<h4>The Border</h4>
+<p>A 1-2px border at <code>rgba(255,255,255,0.3)</code> creates the edge highlight that makes it read as glass. Without it you just have a transparent box.</p>
+<h4>Inset Shadows</h4>
+<p><code>inset 0 2px 8px rgba(255,255,255,0.3)</code> on top and <code>inset 0 -2px 8px rgba(0,0,0,0.1)</code> on the bottom. Light bounce at the top, slight shadow at the bottom — exactly how thick glass behaves.</p>`
+    },
+    {
+      id: 'python-async', tag: 'Backend', date: 'January 5, 2025', readTime: '5 min read',
+      title: 'Python Async Isn\'t Magic — Here\'s What\'s Actually Happening',
+      summary: 'async/await confused me for months. The event loop is simpler than you think.',
+      body: `<p>When I first added <code>async</code> to my FastAPI routes I thought I was making things faster. I wasn't. I just didn't understand what async means in Python.</p>
+<h4>The Event Loop</h4>
+<p>Single-threaded. One loop, runs one thing at a time. Async lets you pause while waiting — for a DB query, HTTP call — and run something else in the meantime. Concurrency without threads.</p>
+<h4>When It Helps</h4>
+<p>Only I/O-bound work. CPU-heavy computation gets nothing. Worse: blocking code inside async freezes the entire event loop.</p>
+<h4>The Fix</h4>
+<p>CPU-bound work: <code>asyncio.run_in_executor()</code> pushes it to a thread pool. I/O work: use async libraries — <code>asyncpg</code> not <code>psycopg2</code>, <code>httpx</code> not <code>requests</code>.</p>`
+    },
+  ];
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let selectedProjectId = null;
+  let selectedBlogId = null;
+  let activeRightSection = 'about';
+
+  // ── Right panel switching ─────────────────────────────────────────────────
+  function showRightPanel(section) {
+    if (activeRightSection === section) return;
+    activeRightSection = section;
+    document.querySelectorAll('.rp-section').forEach(el => el.classList.remove('active'));
+    const map = { about: 'rp-about', projects: 'rp-projects', 'dev blog': 'rp-blog' };
+    const target = document.getElementById(map[section]);
+    if (target) target.classList.add('active');
+    document.getElementById('right-scroll').scrollTop = 0;
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.section === section);
+    });
+  }
+
+  // ── IntersectionObserver — watches which section is in view ───────────────
+  const leftPanel = document.getElementById('left-panel');
+  const observer = new IntersectionObserver((entries) => {
+    // Find the entry with the highest intersection ratio
+    let best = null;
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+      }
+    });
+    if (!best) return;
+    const section = best.target.dataset.section;
+    showRightPanel(section);
+    if (section === 'projects' && !selectedProjectId) {
+      selectedProjectId = projects[0].id;
+      renderProjectCards();
+      renderProjectDetail();
+    }
+    if (section === 'dev blog' && !selectedBlogId) {
+      selectedBlogId = blogPosts[0].id;
+      renderBlogCards();
+      renderBlogDetail();
+    }
+  }, { root: leftPanel, threshold: [0.1, 0.3, 0.5] });
+
+  // ── Render helpers ────────────────────────────────────────────────────────
+  function renderProjectCards() {
+    const c = document.getElementById('project-cards');
+    c.innerHTML = projects.map(p => `
+      <div class="card${selectedProjectId===p.id?' selected':''}" data-id="${p.id}">
+        <div class="card-top">
+          <span class="card-tag">${p.tech[0]}</span>
+          <span class="card-meta">${p.tech.length} techs</span>
+        </div>
+        <h3>${p.emoji} ${p.title}</h3>
+        <p>${p.shortDesc}</p>
+      </div>`).join('');
+    c.querySelectorAll('.card').forEach(card => card.addEventListener('click', () => {
+      selectedProjectId = card.dataset.id;
+      renderProjectCards(); renderProjectDetail();
+    }));
+  }
+
+  function renderProjectDetail() {
+    const ph = document.getElementById('project-placeholder');
+    const dt = document.getElementById('project-detail');
+    if (!selectedProjectId) { ph.style.display='flex'; dt.style.display='none'; return; }
+    const p = projects.find(x => x.id===selectedProjectId);
+    if (!p) return;
+    ph.style.display='none'; dt.style.display='flex';
+    document.getElementById('detail-emoji').textContent = p.emoji;
+    document.getElementById('detail-title').textContent = p.title;
+    document.getElementById('detail-one-liner').textContent = p.oneLiner;
+    document.getElementById('detail-role').textContent = p.role;
+    document.getElementById('detail-challenge').innerHTML = p.challenge.replace(/\*\*(.+?)\*\*/g,'<em>$1</em>');
+    document.getElementById('detail-demo').innerHTML = p.demo
+      ? `<video autoplay loop muted playsinline src="${p.demo}"></video>`
+      : `<div class="detail-demo-placeholder"><div class="detail-demo-icon">▶</div><div class="detail-demo-label">Demo coming soon</div></div>`;
+    document.getElementById('detail-stack').innerHTML = p.tech.map(t=>`<span class="stack-tag">${t}</span>`).join('');
+    const ae = document.getElementById('detail-actions');
+    ae.innerHTML = '';
+    if (p.demo) ae.innerHTML += `<a href="${p.demo}" target="_blank" class="detail-btn detail-btn-primary">↗ Live Demo</a>`;
+    if (p.github) ae.innerHTML += `<a href="${p.github}" target="_blank" class="detail-btn">⌥ GitHub</a>`;
+  }
+
+  function renderBlogCards() {
+    const c = document.getElementById('blog-cards');
+    c.innerHTML = blogPosts.map(p => `
+      <div class="card${selectedBlogId===p.id?' selected':''}" data-id="${p.id}">
+        <div class="card-top">
+          <span class="card-tag">${p.tag}</span>
+          <span class="card-meta">${p.date}</span>
+        </div>
+        <h3>${p.title}</h3>
+        <p>${p.summary}</p>
+        <span class="card-readtime">⏱ ${p.readTime}</span>
+      </div>`).join('');
+    c.querySelectorAll('.card').forEach(card => card.addEventListener('click', () => {
+      selectedBlogId = card.dataset.id;
+      renderBlogCards(); renderBlogDetail();
+    }));
+  }
+
+  function renderBlogDetail() {
+    const ph = document.getElementById('blog-placeholder');
+    const dt = document.getElementById('blog-detail');
+    if (!selectedBlogId) { ph.style.display='flex'; dt.style.display='none'; return; }
+    const p = blogPosts.find(x => x.id===selectedBlogId);
+    if (!p) return;
+    ph.style.display='none'; dt.style.display='flex';
+    document.getElementById('blog-detail-tag').textContent = p.tag;
+    document.getElementById('blog-detail-date').textContent = p.date;
+    document.getElementById('blog-detail-readtime').textContent = '⏱ '+p.readTime;
+    document.getElementById('blog-detail-title').textContent = p.title;
+    document.getElementById('blog-detail-body').innerHTML = p.body;
+  }
+
+  function renderSkills() {
+    const labels = {language:'Languages',frontend:'Frontend',backend:'Backend',database:'Database',tools:'Tools'};
+    document.getElementById('skills-grid').innerHTML = ['language','frontend','backend','database','tools'].map(cat=>`
+      <div class="skills-category">
+        <div class="skills-category-label">${labels[cat]}</div>
+        <div class="skills-row">
+          ${skills.filter(s=>s.category===cat).map(s=>`<div class="skill-item"><div class="skill-icon">${s.icon}</div><div class="skill-name">${s.name}</div></div>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+
+  function renderTechFooter() {
+    const items = skills.map(s=>`<div class="tech-item"><span style="font-size:20px;">${s.icon}</span><span>${s.name}</span></div>`).join('');
+    document.getElementById('tech-scroll').innerHTML = items+items;
+  }
+
+  // ── Nav pill clicks — jump to section ─────────────────────────────────────
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const section = btn.dataset.section;
+      if (section === 'skills') {
+        document.getElementById('skills-overlay').classList.add('open');
+        return;
+      }
+      const target = document.querySelector(`#left-panel [data-section="${section}"]`);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ── Skills modal ──────────────────────────────────────────────────────────
+  document.getElementById('close-skills').addEventListener('click', () =>
+    document.getElementById('skills-overlay').classList.remove('open'));
+  document.getElementById('skills-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('skills-overlay'))
+      document.getElementById('skills-overlay').classList.remove('open');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('skills-overlay').classList.remove('open');
+  });
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  renderProjectCards();
+  renderProjectDetail();
+  renderBlogCards();
+  renderBlogDetail();
+  renderSkills();
+  renderTechFooter();
+  document.querySelectorAll('#left-panel [data-section]').forEach(el => observer.observe(el));
+
+</script>
+</body>
+</html>

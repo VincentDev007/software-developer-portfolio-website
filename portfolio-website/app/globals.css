@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 @theme {
   /* Custom backdrop blur values */
   --blur-xs: 2px;

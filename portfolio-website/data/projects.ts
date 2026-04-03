@@ -2,6 +2,7 @@
 export interface Project {
   id: string;
   title: string;
+  emoji: string;
   thumbnail: string;
   shortDesc: string;
   fullDesc: string;
@@ -17,6 +18,7 @@ export const projects: Project[] = [
   {
     id: "weather-tracker",
     title: "Weather Tracker",
+    emoji: "☁️",
     thumbnail: "/projects/weather-tracker.png",
     shortDesc: "Real-time weather app with 5-day forecasts and location search functionality.",
     fullDesc: "A comprehensive weather application that provides real-time weather data and 5-day forecasts. Features location-based weather detection, city search, and detailed weather metrics including temperature, humidity, and wind speed. Built with OpenWeather API integration.",
@@ -29,6 +31,7 @@ export const projects: Project[] = [
   {
     id: "ride-scope",
     title: "Ride Scope",
+    emoji: "🚗",
     thumbnail: "/projects/ride-scope.png",
     shortDesc: "Vehicle tracking and analytics platform for ride-sharing services.",
     fullDesc: "A full-stack application for tracking and analyzing ride-sharing metrics. Includes real-time GPS tracking, trip history, driver analytics, and interactive dashboards. Features user authentication, role-based access control, and data visualization for fleet management.",
@@ -41,6 +44,7 @@ export const projects: Project[] = [
   {
     id: "contacts-app",
     title: "Contacts App",
+    emoji: "📇",
     thumbnail: "/projects/contacts-app.png",
     shortDesc: "Modern contact management system with search, filtering, and cloud sync.",
     fullDesc: "A feature-rich contact management application with CRUD operations, advanced search and filtering, categorization, and cloud synchronization. Supports importing/exporting contacts, custom fields, and responsive design for mobile and desktop use.",

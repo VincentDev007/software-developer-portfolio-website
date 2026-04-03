@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function ProfileCard({ compact = false }: { compact?: boolean }) {
   if (compact) {
     return (
@@ -24,11 +26,14 @@ export default function ProfileCard({ compact = false }: { compact?: boolean }) 
         </p>
       </div>
 
-      <div className="w-32 h-32 flex-shrink-0 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-lg mr-20">
-
-        <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-        </svg>
+      <div className="w-32 h-32 flex-shrink-0 rounded-full overflow-hidden shadow-lg mr-20">
+        <Image
+          src="/avatar.png"
+          alt="Vincent Agra"
+          width={128}
+          height={128}
+          className="w-full h-full object-cover"
+        />
       </div>
 
     </div>

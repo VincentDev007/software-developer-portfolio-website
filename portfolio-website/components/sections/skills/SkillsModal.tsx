@@ -65,7 +65,7 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white/10 backdrop-blur-3xl rounded-3xl p-8 max-w-4xl w-full max-h-[80vh] overflow-y-auto"
+              className="relative bg-white/10 backdrop-blur-3xl rounded-3xl p-10 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
               style={{
                 border: '1.5px solid rgba(255, 255, 255, 0.3)',
                 boxShadow: `
@@ -88,26 +88,31 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
                 <IoClose size={32} />
               </button>
 
-              <h2 className="text-3xl font-bold text-white mb-8 text-center">
+              <h2 className="text-3xl font-bold text-white mb-10 text-center">
                 Skills & Technologies
               </h2>
 
-              <div className="space-y-8">
+              <div className="space-y-10">
                 {categoryOrder.map(category => (
-                  <div key={category} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {groupedSkills[category].map(skill => (
-                      <div
-                        key={skill.id}
-                        className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 group"
-                      >
-                        <div className="mb-2 transform group-hover:scale-110 transition-transform duration-300">
-                          {skill.icon}
+                  <div key={category}>
+                    <h3 className="text-[11px] font-bold uppercase tracking-[0.12em] text-white/40 text-center mb-4">
+                      {category === 'language' ? 'Languages' : category === 'tools' ? 'Tools' : category.charAt(0).toUpperCase() + category.slice(1)}
+                    </h3>
+                    <div className="flex flex-wrap justify-center gap-4">
+                      {groupedSkills[category].map(skill => (
+                        <div
+                          key={skill.id}
+                          className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 group w-24"
+                        >
+                          <div className="mb-2 transform group-hover:scale-110 transition-transform duration-300">
+                            {skill.icon}
+                          </div>
+                          <span className="text-sm text-white/80 text-center font-medium">
+                            {skill.name}
+                          </span>
                         </div>
-                        <span className="text-sm text-white/80 text-center font-medium">
-                          {skill.name}
-                        </span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>

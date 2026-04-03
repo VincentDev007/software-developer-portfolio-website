@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Navigation from './Navigation';
@@ -9,246 +9,180 @@ import ProfileCard from './ProfileCard';
 import SkillsModal from '../sections/skills/SkillsModal'
 
 import AboutMeLeft from '../sections/about/AboutMeLeft';
-// import ExperienceLeft from '../sections/experience/ExperienceLeft';
 import ProjectsLeft from '../sections/projects/ProjectsLeft';
 import DevBlog_Left from '../sections/dev_blog/DevBlog_Left';
 
 import AboutMeRight from '../sections/about/AboutMeRight';
-// import ExperienceRight from '../sections/experience/ExperienceRight';
 import ProjectsRight from '../sections/projects/ProjectsRight';
 import DevBlog_Right from '../sections/dev_blog/DevBlog_Right';
 
 export default function TwoPanel() {
   const [activeSection, setActiveSection] = useState('about');
-
-  // const [selectedExperienceId, setSelectedExperienceId] = useState(10);
-
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-
+  const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);
 
-  const [previousSection, setPreviousSection] = useState('about');
+  const leftScrollRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+  const devblogRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = useCallback((section: string) => {
+    if (section === 'skills') {
+      setIsSkillsModalOpen(true);
+      return;
+    }
+    const map: Record<string, React.RefObject<HTMLDivElement | null>> = {
+      about: aboutRef,
+      projects: projectsRef,
+      'dev blog': devblogRef,
+    };
+    map[section]?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   useEffect(() => {
-    if (activeSection === 'skills') {
-      setIsSkillsModalOpen(true)
-    }
-  }, [activeSection])
+    const root = leftScrollRef.current;
+    if (!root) return;
 
-  const handleCloseSkillsModal = () => {
-    setIsSkillsModalOpen(false)
-    setActiveSection(previousSection)
-  }
+    const handleScroll = () => {
+      const scrollTop = root.scrollTop;
+      const sections = [
+        { ref: aboutRef, section: 'about' },
+        { ref: projectsRef, section: 'projects' },
+        { ref: devblogRef, section: 'dev blog' },
+      ];
 
-return (
-  <>
+      let current = 'about';
+      for (const { ref, section } of sections) {
+        if (!ref.current) continue;
+        if (ref.current.offsetTop <= scrollTop + root.clientHeight / 2) {
+          current = section;
+        }
+      }
+      setActiveSection(current);
+    };
 
-    <div className="grid grid-cols-2 gap-8 flex-1 overflow-hidden mb-8">
+    root.addEventListener('scroll', handleScroll, { passive: true });
+    return () => root.removeEventListener('scroll', handleScroll);
+  }, []);
 
-      <nav aria-label="Main navigation" className="flex flex-col">
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-8 flex-1 overflow-hidden mb-8">
 
-        <div className="mb-0">
+        <nav aria-label="Main navigation" className="flex flex-col overflow-hidden">
 
-          <Navigation
-            activeSection={activeSection}
-            setActiveSection={(section) => {
-              if (section !== 'skills') {
-                setPreviousSection(section)
-              }
-              setActiveSection(section)
-            }}
+          <div className="mb-0">
+            <Navigation
+              activeSection={activeSection}
+              setActiveSection={scrollToSection}
             />
 
-          {activeSection !== 'about' && (
-            <div className="flex items-start justify-between">
-              <SocialIcons />
-              <ProfileCard compact={true} />
+            {activeSection !== 'about' && (
+              <div className="flex items-start justify-between">
+                <SocialIcons />
+                <ProfileCard compact={true} />
+              </div>
+            )}
+
+            {activeSection === 'about' && <SocialIcons />}
+          </div>
+
+          <div className="flex-1 overflow-y-auto scrollbar-hide" ref={leftScrollRef}>
+
+            <div ref={aboutRef} data-section="about">
+              <ProfileCard compact={false} />
+              <AboutMeLeft />
             </div>
-          )}
 
-          {activeSection === 'about' && <SocialIcons />}
-        </div>
+            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(0,0,0,0.08)' }} />
 
-        <div className="flex-1 overflow-y-auto">
+            <div ref={projectsRef} data-section="projects">
+              <ProjectsLeft
+                selectedId={selectedProjectId}
+                onSelectProject={setSelectedProjectId}
+              />
+            </div>
 
-          <AnimatePresence mode="wait">
+            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(0,0,0,0.08)' }} />
 
-            {activeSection === 'about' && (
-              <motion.div
-                key="about-left"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+            <div ref={devblogRef} data-section="dev blog">
+              <DevBlog_Left
+                selectedId={selectedBlogId}
+                onSelectPost={setSelectedBlogId}
+              />
+            </div>
 
-                <ProfileCard compact={false} />
+          </div>
+        </nav>
 
-                <AboutMeLeft />
-              </motion.div>
-            )}
-            
-            {activeSection === 'projects' && (
-              <motion.div
-                key="projects-left"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+        <main
+          id="main-content"
+          className="relative bg-white/10 backdrop-blur-3xl rounded-3xl p-8 overflow-hidden flex flex-col"
+          style={{
+            border: '1.5px solid rgba(255, 255, 255, 0.3)',
+            boxShadow: `
+              0 1px 1px rgba(0, 0, 0, 0.15),
+              0 2px 2px rgba(0, 0, 0, 0.15),
+              0 4px 4px rgba(0, 0, 0, 0.15),
+              0 8px 8px rgba(0, 0, 0, 0.15),
+              0 16px 16px rgba(0, 0, 0, 0.15),
+              inset 0 2px 8px rgba(255, 255, 255, 0.3),
+              inset 0 -2px 8px rgba(0, 0, 0, 0.1)
+            `,
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%)'
+          }}
+        >
+          <div className="flex-1 overflow-y-auto">
+            <AnimatePresence mode="wait">
 
-                <ProjectsLeft
-                  selectedId={selectedProjectId}
-                  onSelectProject={setSelectedProjectId}
-                />
+              {activeSection === 'about' && (
+                <motion.div
+                  key="about-right"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <AboutMeRight />
+                </motion.div>
+              )}
 
-              </motion.div>
-            )}
+              {activeSection === 'projects' && (
+                <motion.div
+                  key="projects-right"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="h-full"
+                >
+                  <ProjectsRight selectedId={selectedProjectId} />
+                </motion.div>
+              )}
 
-            {activeSection === 'dev blog' && (
-              <motion.div
-                key="devblog-left"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <DevBlog_Left />
-              </motion.div>
-            )}
+              {activeSection === 'dev blog' && (
+                <motion.div
+                  key="devblog-right"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="h-full"
+                >
+                  <DevBlog_Right selectedId={selectedBlogId} />
+                </motion.div>
+              )}
 
-            {/* this is a comment 
-            {activeSection === 'experience' && (
-              <motion.div
-                key="experience-left"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+            </AnimatePresence>
+          </div>
+        </main>
+      </div>
 
-                <ExperienceLeft
-                  selectedId={selectedExperienceId}
-                  onSelectExperience={setSelectedExperienceId}
-                />
-              </motion.div>
-            )} 
-
-            {activeSection === 'projects' && (
-              <motion.div
-                key="projects-left"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-
-                <ProjectsLeft
-                  selectedId={selectedProjectId}
-                  onSelectProject={setSelectedProjectId}
-                />
-
-              </motion.div>
-            )} */}
-          </AnimatePresence>
-        </div>
-      </nav>
-
-      <main
-        id="main-content"
-        className="relative bg-white/10 backdrop-blur-3xl rounded-3xl p-8 overflow-hidden flex flex-col"
-        style={{
-          border: '1.5px solid rgba(255, 255, 255, 0.3)',
-          boxShadow: `
-            0 1px 1px rgba(0, 0, 0, 0.15),
-            0 2px 2px rgba(0, 0, 0, 0.15),
-            0 4px 4px rgba(0, 0, 0, 0.15),
-            0 8px 8px rgba(0, 0, 0, 0.15),
-            0 16px 16px rgba(0, 0, 0, 0.15),
-            inset 0 2px 8px rgba(255, 255, 255, 0.3),
-            inset 0 -2px 8px rgba(0, 0, 0, 0.1)
-          `,
-          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%)'
-        }}
-      >
-
-        <div className="flex-1 overflow-y-auto">
-
-          <AnimatePresence mode="wait">
-
-            {activeSection === 'about' && (
-              <motion.div
-                key="about-right"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-
-                <AboutMeRight />
-              </motion.div>
-            )}
-            
-            {activeSection === 'projects' && (
-              <motion.div
-                key="projects-right"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-
-                <ProjectsRight selectedId={selectedProjectId} />
-              </motion.div>
-            )}
-
-            {activeSection === 'dev blog' && (
-              <motion.div
-                key="devblog-right"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <DevBlog_Right />
-              </motion.div>
-            )}
-
-            {/* this is a comment 
-            {activeSection === 'experience' && (
-              <motion.div
-                key="experience-right"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-
-                <ExperienceRight selectedId={selectedExperienceId} />
-              </motion.div>
-            )} 
-
-            {activeSection === 'projects' && (
-              <motion.div
-                key="projects-right"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-
-                <ProjectsRight selectedId={selectedProjectId} />
-              </motion.div>
-            )} */}
-          </AnimatePresence>
-        </div>
-      </main>
-    </div>
-
-    <SkillsModal
-      isOpen={isSkillsModalOpen}
-      onClose={handleCloseSkillsModal}
-    />
-  </>
+      <SkillsModal
+        isOpen={isSkillsModalOpen}
+        onClose={() => setIsSkillsModalOpen(false)}
+      />
+    </>
   );
 }

@@ -7,121 +7,116 @@ interface ProjectsRightProps {
 export default function ProjectsRight({ selectedId }: ProjectsRightProps) {
   if (!selectedId) {
     return (
-      <div className="h-full flex items-center justify-center">
-
-        <div className="text-center opacity-60">
-
-          <div className="text-6xl mb-4">📂</div>
-
-          <p className="text-xl">Select a project to view details</p>
+      <div className="h-full flex items-center justify-center text-center opacity-60">
+        <div>
+          <div className="text-[60px] mb-4">📂</div>
+          <p className="text-[18px] text-gray-700">Select a project to view details</p>
         </div>
       </div>
     );
   }
 
   const project = getProjectById(selectedId);
-
-  if (!project) {
-    return (
-      <div className="h-full flex items-center justify-center">
-        <p className="text-xl opacity-60">Project not found</p>
-      </div>
-    );
-  }
-
-  const getTechColor = (tech: string) => {
-    const colors: Record<string, string> = {
-      'Python': 'linear-gradient(to bottom, #3776ab 50%, #ffd343 50%)',
-      'JavaScript': '#f0db4f',
-      'TypeScript': '#3178c6',
-      'React': '#61dafb',
-      'Next.js': '#000000',
-      'Node.js': '#68a063',
-      'HTML': '#e34c26',
-      'CSS': '#264de4',
-      'Tailwind CSS': '#06b6d4',
-      'PostgreSQL': '#336791',
-      'MongoDB': '#47a248',
-      'Firebase': '#ffca28',
-      'OpenWeather API': '#eb6e4b',
-      'Google Maps API': '#4285f4',
-      'Chart.js': '#ff6384',
-      'Material UI': '#0081cb',
-    };
-    return colors[tech] || '#ffffff';
-  };
-
-  const getTechLabel = (tech: string) => {
-    const labels: Record<string, string> = {
-      'Python': 'PY',
-      'JavaScript': 'JS',
-      'TypeScript': 'TS',
-      'React': 'REACT',
-      'Next.js': 'NEXT',
-      'Node.js': 'NODE',
-      'HTML': 'HTML',
-      'CSS': 'CSS',
-      'Tailwind CSS': 'TAIL',
-      'PostgreSQL': 'PSQL',
-      'MongoDB': 'MONGO',
-      'Firebase': 'FIRE',
-      'OpenWeather API': 'API',
-      'Google Maps API': 'MAPS',
-      'Chart.js': 'CHART',
-      'Material UI': 'MUI',
-    };
-    return labels[tech] || tech.substring(0, 4).toUpperCase();
-  };
+  if (!project) return null;
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex flex-col h-full">
 
-      <div className="flex gap-3 mb-8">
-
-        <button className="px-6 py-2.5 bg-white/20 hover:bg-white/30 rounded-full text-sm font-semibold uppercase tracking-wider transition-all">
-          Live Demo
-        </button>
-
-        <button className="px-6 py-2.5 bg-white/20 hover:bg-white/30 rounded-full text-sm font-semibold uppercase tracking-wider transition-all">
-          GitHub
-        </button>
-
-        <button className="px-6 py-2.5 bg-white/20 hover:bg-white/30 rounded-full text-sm font-semibold uppercase tracking-wider transition-all">
-          Source Code
-        </button>
-
-        <button className="px-6 py-2.5 bg-white/20 hover:bg-white/30 rounded-full text-sm font-semibold uppercase tracking-wider transition-all">
-          Debug
-        </button>
-      </div>
-
-      <h1 className="text-6xl font-bold uppercase mb-10 tracking-wider">{project.title}</h1>
-
-      <div className="mb-auto">
-
-        <p className="text-base leading-relaxed opacity-90">{project.fullDesc}</p>
-      </div>
-
-      <div className="mt-12">
-
-        <h3 className="text-sm lowercase opacity-70 mb-4">tech stack used</h3>
-
-        <div className="flex gap-4">
-
-          {project.tech.map((tech) => (
-            <div
-              key={tech}
-              className="w-16 h-16 rounded-lg flex items-center justify-center text-xs font-bold bg-white text-black"
-              style={{
-                background: getTechColor(tech)
-              }}
-            >
-
-              {getTechLabel(tech)}
-            </div>
-          ))}
+      <div className="flex items-start gap-[18px] mb-6">
+        <div
+          className="w-14 h-14 flex-shrink-0 flex items-center justify-center text-[26px] rounded-[14px]"
+          style={{
+            background: 'rgba(255,255,255,0.25)',
+            border: '1.5px solid rgba(255,255,255,0.4)',
+          }}
+        >
+          {project.emoji}
+        </div>
+        <div className="flex-1">
+          <div className="text-[26px] font-bold text-gray-900 tracking-[-0.02em] leading-[1.2] mb-1.5">
+            {project.title}
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            {project.tech.slice(0, 2).map((t) => (
+              <span
+                key={t}
+                className="text-[10px] font-bold uppercase tracking-[0.08em] px-[9px] py-[3px] rounded-full text-gray-700"
+                style={{ background: 'rgba(255,255,255,0.22)' }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
+
+      <div className="h-px mb-6" style={{ background: 'rgba(255,255,255,0.25)' }} />
+
+      <p className="text-[14px] leading-[1.8] text-gray-700 mb-7">{project.fullDesc}</p>
+
+      <div className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400 mb-3">
+        Tech Stack
+      </div>
+      <div className="flex flex-wrap gap-2 mb-7">
+        {project.tech.map((t) => (
+          <span
+            key={t}
+            className="text-[12px] font-semibold px-3 py-1.5 rounded-[8px] text-gray-900"
+            style={{
+              background: 'rgba(255,255,255,0.18)',
+              border: '1px solid rgba(255,255,255,0.3)',
+            }}
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+
+      <div className="flex gap-2.5 flex-wrap mt-auto pt-5">
+        {project.links.live && (
+          <a
+            href={project.links.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-5 py-2.5 text-[13px] font-semibold text-gray-900 rounded-[10px] transition-all hover:bg-white/[0.32]"
+            style={{
+              background: 'rgba(255,255,255,0.18)',
+              border: '1.5px solid rgba(255,255,255,0.35)',
+            }}
+          >
+            <span>↗</span> Live Demo
+          </a>
+        )}
+        {project.links.github && (
+          <a
+            href={project.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-5 py-2.5 text-[13px] font-semibold text-gray-900 rounded-[10px] transition-all hover:bg-white/[0.32]"
+            style={{
+              background: 'rgba(255,255,255,0.18)',
+              border: '1.5px solid rgba(255,255,255,0.35)',
+            }}
+          >
+            <span>⌥</span> GitHub
+          </a>
+        )}
+        {project.links.source && (
+          <a
+            href={project.links.source}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-5 py-2.5 text-[13px] font-semibold text-gray-900 rounded-[10px] transition-all hover:bg-white/[0.32]"
+            style={{
+              background: 'rgba(255,255,255,0.18)',
+              border: '1.5px solid rgba(255,255,255,0.35)',
+            }}
+          >
+            <span>⌘</span> Source Code
+          </a>
+        )}
+      </div>
+
     </div>
   );
 }
