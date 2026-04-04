@@ -9,8 +9,8 @@ export default function ProjectsLeft({ selectedId, onSelectProject }: ProjectsLe
   return (
     <div className="pb-8">
 
-      <h2 className="text-[22px] font-bold mb-2 text-gray-900">My Projects</h2>
-      <p className="text-[13px] text-gray-500 mb-6">Things I've built from scratch.</p>
+      <h2 className="text-[22px] font-bold mb-2 text-white/90">My Projects</h2>
+      <p className="text-[13px] text-white/50 mb-6">Things I've built from scratch.</p>
 
       <div>
         {projects.map((project) => (
@@ -29,19 +29,19 @@ export default function ProjectsLeft({ selectedId, onSelectProject }: ProjectsLe
             }}
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-0.5 rounded-full bg-white/20 text-gray-700">
+              <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-0.5 rounded-full bg-white/20 text-white/70">
                 {project.tech[0]}
               </span>
-              <span className="text-[11px] text-gray-400">
+              <span className="text-[11px] text-white/40">
                 {project.tech.length} techs
               </span>
             </div>
 
-            <h3 className="text-[14px] font-semibold text-gray-900 leading-snug">
+            <h3 className="text-[14px] font-semibold text-white/90 leading-snug">
               {project.title}
             </h3>
 
-            <p className="text-[12px] text-gray-500 leading-relaxed">
+            <p className="text-[12px] text-white/50 leading-relaxed">
               {project.shortDesc}
             </p>
 

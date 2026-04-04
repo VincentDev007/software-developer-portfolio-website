@@ -95,7 +95,7 @@ export default function TwoPanel() {
               <AboutMeLeft />
             </div>
 
-            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(0,0,0,0.08)' }} />
+            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
 
             <div ref={projectsRef} data-section="projects">
               <ProjectsLeft
@@ -104,7 +104,7 @@ export default function TwoPanel() {
               />
             </div>
 
-            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(0,0,0,0.08)' }} />
+            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
 
             <div ref={devblogRef} data-section="dev blog">
               <DevBlog_Left

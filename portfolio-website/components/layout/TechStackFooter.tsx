@@ -13,10 +13,10 @@ export default function TechStackFooter() {
             key={`tech-1-${skill.id}`}
             className="flex items-center gap-3 flex-shrink-0"
           >
-            <div className="text-gray-700">
+            <div className="text-white/50">
               {skill.icon}
             </div>
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+            <span className="text-sm font-medium text-white/50 whitespace-nowrap">
               {skill.name}
             </span>
           </div>
@@ -27,10 +27,10 @@ export default function TechStackFooter() {
             key={`tech-2-${skill.id}`}
             className="flex items-center gap-3 flex-shrink-0"
           >
-            <div className="text-gray-700">
+            <div className="text-white/50">
               {skill.icon}
             </div>
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+            <span className="text-sm font-medium text-white/50 whitespace-nowrap">
               {skill.name}
             </span>
           </div>

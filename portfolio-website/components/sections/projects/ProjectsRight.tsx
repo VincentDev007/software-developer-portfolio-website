@@ -7,10 +7,10 @@ interface ProjectsRightProps {
 export default function ProjectsRight({ selectedId }: ProjectsRightProps) {
   if (!selectedId) {
     return (
-      <div className="h-full flex items-center justify-center text-center opacity-60">
+      <div className="h-full flex items-center justify-center text-center opacity-50">
         <div>
-          <div className="text-[60px] mb-4">📂</div>
-          <p className="text-[18px] text-gray-700">Select a project to view details</p>
+          <div className="text-[44px] mb-3">📂</div>
+          <p className="text-[15px] text-white/70">Select a project</p>
         </div>
       </div>
     );
@@ -22,9 +22,17 @@ export default function ProjectsRight({ selectedId }: ProjectsRightProps) {
   return (
     <div className="flex flex-col h-full">
 
-      <div className="flex items-start gap-[18px] mb-6">
+      <div className="flex items-start justify-between gap-4 mb-4">
+        <div className="flex flex-col gap-1.5 flex-1">
+          <div className="text-[22px] font-bold text-white/90 tracking-[-0.02em] leading-[1.2]">
+            {project.title}
+          </div>
+          <div className="text-[13px] text-white/60 leading-[1.6]">
+            {project.oneLiner}
+          </div>
+        </div>
         <div
-          className="w-14 h-14 flex-shrink-0 flex items-center justify-center text-[26px] rounded-[14px]"
+          className="w-12 h-12 flex-shrink-0 flex items-center justify-center text-[22px] rounded-[12px]"
           style={{
             background: 'rgba(255,255,255,0.25)',
             border: '1.5px solid rgba(255,255,255,0.4)',
@@ -32,59 +40,78 @@ export default function ProjectsRight({ selectedId }: ProjectsRightProps) {
         >
           {project.emoji}
         </div>
-        <div className="flex-1">
-          <div className="text-[26px] font-bold text-gray-900 tracking-[-0.02em] leading-[1.2] mb-1.5">
-            {project.title}
+      </div>
+
+      <div
+        className="w-full h-[155px] rounded-[12px] flex items-center justify-center mb-4"
+        style={{
+          background: 'rgba(0,0,0,0.06)',
+          border: '1.5px solid rgba(255,255,255,0.2)',
+        }}
+      >
+        {project.links.demo ? (
+          <video autoPlay loop muted playsInline src={project.links.demo} className="w-full h-full object-cover rounded-[12px]" />
+        ) : (
+          <div className="flex flex-col items-center gap-2 opacity-45">
+            <div
+              className="w-8 h-8 rounded-[8px] flex items-center justify-center text-[13px]"
+              style={{
+                background: 'rgba(255,255,255,0.3)',
+                border: '1px solid rgba(255,255,255,0.4)',
+              }}
+            >
+              ▶
+            </div>
+            <div className="text-[12px] text-white/70 font-medium">Demo coming soon</div>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            {project.tech.slice(0, 2).map((t) => (
-              <span
-                key={t}
-                className="text-[10px] font-bold uppercase tracking-[0.08em] px-[9px] py-[3px] rounded-full text-gray-700"
-                style={{ background: 'rgba(255,255,255,0.22)' }}
-              >
-                {t}
-              </span>
-            ))}
-          </div>
+        )}
+      </div>
+
+      <div className="h-px mb-[13px]" style={{ background: 'rgba(255,255,255,0.25)' }} />
+      <div className="mb-[13px]">
+        <div className="text-[10px] font-bold uppercase tracking-[0.1em] text-white/40 mb-[5px]">Your role</div>
+        <div className="text-[13px] text-white/70 leading-[1.7]">{project.role}</div>
+      </div>
+
+      <div className="h-px mb-[13px]" style={{ background: 'rgba(255,255,255,0.25)' }} />
+      <div className="mb-[13px]">
+        <div className="text-[10px] font-bold uppercase tracking-[0.1em] text-white/40 mb-[5px]">What was hard</div>
+        <div className="text-[13px] text-white/70 leading-[1.7]">{project.challenge}</div>
+      </div>
+
+      <div className="h-px mb-[13px]" style={{ background: 'rgba(255,255,255,0.25)' }} />
+      <div className="mb-[13px]">
+        <div className="text-[10px] font-bold uppercase tracking-[0.1em] text-white/40 mb-[5px]">Stack</div>
+        <div className="flex flex-wrap gap-[7px]">
+          {project.tech.map((t) => (
+            <span
+              key={t}
+              className="text-[11px] font-semibold px-[10px] py-1 rounded-[7px] text-white/90"
+              style={{
+                background: 'rgba(255,255,255,0.18)',
+                border: '1px solid rgba(255,255,255,0.3)',
+              }}
+            >
+              {t}
+            </span>
+          ))}
         </div>
       </div>
 
-      <div className="h-px mb-6" style={{ background: 'rgba(255,255,255,0.25)' }} />
-
-      <p className="text-[14px] leading-[1.8] text-gray-700 mb-7">{project.fullDesc}</p>
-
-      <div className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400 mb-3">
-        Tech Stack
-      </div>
-      <div className="flex flex-wrap gap-2 mb-7">
-        {project.tech.map((t) => (
-          <span
-            key={t}
-            className="text-[12px] font-semibold px-3 py-1.5 rounded-[8px] text-gray-900"
-            style={{
-              background: 'rgba(255,255,255,0.18)',
-              border: '1px solid rgba(255,255,255,0.3)',
-            }}
-          >
-            {t}
-          </span>
-        ))}
-      </div>
-
-      <div className="flex gap-2.5 flex-wrap mt-auto pt-5">
+      <div className="flex gap-2 flex-wrap mt-auto pt-4">
         {project.links.live && (
           <a
             href={project.links.live}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-5 py-2.5 text-[13px] font-semibold text-gray-900 rounded-[10px] transition-all hover:bg-white/[0.32]"
+            className="flex items-center gap-1.5 px-[18px] py-[9px] text-[12px] font-semibold rounded-[10px] transition-all hover:bg-white/[0.32]"
             style={{
-              background: 'rgba(255,255,255,0.18)',
-              border: '1.5px solid rgba(255,255,255,0.35)',
+              background: 'rgba(99,102,241,0.15)',
+              border: '1.5px solid rgba(99,102,241,0.3)',
+              color: '#818cf8',
             }}
           >
-            <span>↗</span> Live Demo
+            ↗ Live Demo
           </a>
         )}
         {project.links.github && (
@@ -92,27 +119,13 @@ export default function ProjectsRight({ selectedId }: ProjectsRightProps) {
             href={project.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-5 py-2.5 text-[13px] font-semibold text-gray-900 rounded-[10px] transition-all hover:bg-white/[0.32]"
+            className="flex items-center gap-1.5 px-[18px] py-[9px] text-[12px] font-semibold text-white/90 rounded-[10px] transition-all hover:bg-white/[0.32]"
             style={{
               background: 'rgba(255,255,255,0.18)',
               border: '1.5px solid rgba(255,255,255,0.35)',
             }}
           >
-            <span>⌥</span> GitHub
-          </a>
-        )}
-        {project.links.source && (
-          <a
-            href={project.links.source}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-5 py-2.5 text-[13px] font-semibold text-gray-900 rounded-[10px] transition-all hover:bg-white/[0.32]"
-            style={{
-              background: 'rgba(255,255,255,0.18)',
-              border: '1.5px solid rgba(255,255,255,0.35)',
-            }}
-          >
-            <span>⌘</span> Source Code
+            ⌥ GitHub
           </a>
         )}
       </div>

@@ -4,7 +4,7 @@ export default function ProfileCard({ compact = false }: { compact?: boolean }) 
   if (compact) {
     return (
       <div className="mb-5 px-10 mt-6">
-        <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
+        <h2 className="text-2xl font-bold text-white/90 tracking-tight">
           Vincent Agra
         </h2>
       </div>
@@ -17,11 +17,11 @@ export default function ProfileCard({ compact = false }: { compact?: boolean }) 
 
       <div className="flex-1 px-10">
 
-        <h1 className="text-5xl font-bold text-gray-900 mb-2 tracking-tight">
+        <h1 className="text-5xl font-bold text-white/90 mb-2 tracking-tight">
           Vincent Agra
         </h1>
 
-        <p className="text-xl text-gray-600 font-medium">
+        <p className="text-xl text-white/60 font-medium">
           Software Developer
         </p>
       </div>

@@ -12,7 +12,7 @@ export default function SocialIcons() {
         className="w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-white/20 hover:-translate-y-1"
         aria-label="GitHub profile"
       >
-        <FaGithub className="w-6 h-6 text-gray-700" />
+        <FaGithub className="w-6 h-6 text-white/70" />
       </a>
 
       <a
@@ -22,7 +22,7 @@ export default function SocialIcons() {
         className="w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-white/20 hover:-translate-y-1"
         aria-label="LinkedIn profile"
       >
-        <FaLinkedin className="w-6 h-6 text-gray-700" />
+        <FaLinkedin className="w-6 h-6 text-white/70" />
       </a>
 
       <a
@@ -30,7 +30,7 @@ export default function SocialIcons() {
         className="w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-white/20 hover:-translate-y-1"
         aria-label="Email contact"
       >
-        <FaEnvelope className="w-6 h-6 text-gray-700" />
+        <FaEnvelope className="w-6 h-6 text-white/70" />
       </a>
 
       <a
@@ -38,7 +38,7 @@ export default function SocialIcons() {
         className="w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-white/20 hover:-translate-y-1"
         aria-label="Phone contact"
       >
-        <FaPhone className="w-6 h-6 text-gray-700" />
+        <FaPhone className="w-6 h-6 text-white/70" />
       </a>
 
     </div>

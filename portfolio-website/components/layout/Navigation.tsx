@@ -37,7 +37,7 @@ export default function Navigation({ activeSection, setActiveSection }: Navigati
             ${
               activeSection === section
                 ? 'bg-white text-black shadow-md'
-                : 'bg-transparent text-black/70 hover:bg-black/5'
+                : 'bg-transparent text-white/70 hover:bg-white/10'
             }
           `}
         >
