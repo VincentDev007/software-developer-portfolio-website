@@ -1,22 +1,22 @@
 export default function AboutMeRight() {
   return (
     <div>
-      <h2 className="text-3xl font-bold text-white/90 mb-6">About Me</h2>
+      <h2 className="text-3xl font-bold text-gray-900 mb-6">About Me</h2>
 
-      <p className="text-white/70 leading-relaxed mb-4">
+      <p className="text-gray-600 leading-relaxed mb-4">
         I do the full software development lifecycle, but what pulls me most is the backend —
         the logic, the systems, the way things actually work under the hood.
         That curiosity started before I ever wrote a line of code. I've always been fascinated by
         how computers communicate with their components.
-        </p>
+      </p>
 
-      <p className="text-white/70 leading-relaxed mb-4">
+      <p className="text-gray-600 leading-relaxed mb-4">
         One of my projects, Sydny, is a local desktop voice assistant powered by
         Llama — built entirely from scratch. It's the kind of thing I like building:
         software with real depth.
       </p>
 
-      <p className="text-white/70 leading-relaxed">
+      <p className="text-gray-600 leading-relaxed">
         Outside of code, I'm a filmmaker. Travel videos, music videos, short films.
         It's a serious creative outlet, and it bleeds into how I think about interfaces —
         I approach UI the way a cinematographer approaches a frame.
@@ -26,4 +26,3 @@ export default function AboutMeRight() {
     </div>
   );
 }
-

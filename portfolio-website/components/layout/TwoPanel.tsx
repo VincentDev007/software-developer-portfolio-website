@@ -19,7 +19,9 @@ import DevBlog_Right from '../sections/dev_blog/DevBlog_Right';
 export default function TwoPanel() {
   const [activeSection, setActiveSection] = useState('about');
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
   const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
+  const [hoveredBlogId, setHoveredBlogId] = useState<string | null>(null);
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);
 
   const leftScrollRef = useRef<HTMLDivElement>(null);
@@ -95,21 +97,23 @@ export default function TwoPanel() {
               <AboutMeLeft />
             </div>
 
-            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(0,0,0,0.06)' }} />
 
             <div ref={projectsRef} data-section="projects">
               <ProjectsLeft
                 selectedId={selectedProjectId}
                 onSelectProject={setSelectedProjectId}
+                onHoverProject={setHoveredProjectId}
               />
             </div>
 
-            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+            <div className="mx-0 my-10 h-px" style={{ background: 'rgba(0,0,0,0.06)' }} />
 
             <div ref={devblogRef} data-section="dev blog">
               <DevBlog_Left
                 selectedId={selectedBlogId}
                 onSelectPost={setSelectedBlogId}
+                onHoverPost={setHoveredBlogId}
               />
             </div>
 
@@ -120,17 +124,13 @@ export default function TwoPanel() {
           id="main-content"
           className="relative bg-white/10 backdrop-blur-3xl rounded-3xl p-8 overflow-hidden flex flex-col"
           style={{
-            border: '1.5px solid rgba(255, 255, 255, 0.3)',
+            border: '1.5px solid rgba(255,255,255,0.9)',
             boxShadow: `
-              0 1px 1px rgba(0, 0, 0, 0.15),
-              0 2px 2px rgba(0, 0, 0, 0.15),
-              0 4px 4px rgba(0, 0, 0, 0.15),
-              0 8px 8px rgba(0, 0, 0, 0.15),
-              0 16px 16px rgba(0, 0, 0, 0.15),
-              inset 0 2px 8px rgba(255, 255, 255, 0.3),
-              inset 0 -2px 8px rgba(0, 0, 0, 0.1)
+              0 2px 4px rgba(0, 0, 0, 0.04),
+              0 8px 24px rgba(0, 0, 0, 0.07),
+              inset 0 1px 0 rgba(255, 255, 255, 1)
             `,
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%)'
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,0.65) 100%)'
           }}
         >
           <div className="flex-1 overflow-y-auto">
@@ -157,7 +157,7 @@ export default function TwoPanel() {
                   transition={{ duration: 0.3 }}
                   className="h-full"
                 >
-                  <ProjectsRight selectedId={selectedProjectId} />
+                  <ProjectsRight selectedId={selectedProjectId} hoveredId={hoveredProjectId} />
                 </motion.div>
               )}
 
@@ -170,7 +170,7 @@ export default function TwoPanel() {
                   transition={{ duration: 0.3 }}
                   className="h-full"
                 >
-                  <DevBlog_Right selectedId={selectedBlogId} />
+                  <DevBlog_Right selectedId={selectedBlogId} hoveredId={hoveredBlogId} />
                 </motion.div>
               )}
 

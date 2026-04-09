@@ -2,50 +2,48 @@ import { projects } from '@/data/projects';
 
 interface ProjectsLeftProps {
   selectedId: string | null;
-  onSelectProject: (id: string) => void;
+  onSelectProject: (id: string | null) => void;
+  onHoverProject: (id: string | null) => void;
 }
 
-export default function ProjectsLeft({ selectedId, onSelectProject }: ProjectsLeftProps) {
+export default function ProjectsLeft({ selectedId, onSelectProject, onHoverProject }: ProjectsLeftProps) {
   return (
     <div className="pb-8">
 
-      <h2 className="text-[22px] font-bold mb-2 text-white/90">My Projects</h2>
-      <p className="text-[13px] text-white/50 mb-6">Things I've built from scratch.</p>
+      <h2 className="text-[22px] font-bold mb-2 text-gray-900">My Projects</h2>
+      <p className="text-[13px] text-gray-400 mb-6">Things I've built from scratch.</p>
 
-      <div>
+      <div className="grid grid-cols-2 gap-3">
         {projects.map((project) => (
-          <div
+          <button
             key={project.id}
-            onClick={() => onSelectProject(project.id)}
-            className={`flex flex-col gap-2.5 p-4 rounded-[14px] mb-3 cursor-pointer transition-all duration-200 ${
+            onClick={() => onSelectProject(selectedId === project.id ? null : project.id)}
+            onMouseEnter={() => onHoverProject(project.id)}
+            onMouseLeave={() => onHoverProject(null)}
+            className={`flex flex-col justify-between gap-3 p-4 rounded-[14px] cursor-pointer transition-all duration-200 aspect-square text-left w-full ${
               selectedId === project.id
-                ? 'bg-white/[0.18] opacity-100'
-                : 'bg-white/[0.08] opacity-75 hover:bg-white/[0.16] hover:opacity-100'
+                ? 'bg-white/90 opacity-100'
+                : 'bg-white/50 opacity-80 hover:bg-white/75 hover:opacity-100'
             }`}
             style={{
               border: selectedId === project.id
-                ? '1.5px solid rgba(255,255,255,0.35)'
-                : '1.5px solid rgba(255,255,255,0.15)'
+                ? '1.5px solid rgba(0,0,0,0.12)'
+                : '1.5px solid rgba(0,0,0,0.06)'
             }}
           >
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-0.5 rounded-full bg-white/20 text-white/70">
-                {project.tech[0]}
-              </span>
-              <span className="text-[11px] text-white/40">
-                {project.tech.length} techs
-              </span>
+            <div className="w-full rounded-[8px] bg-gradient-to-br from-black/5 to-black/[0.02] flex items-center justify-center" style={{ height: '90px' }}>
+              <span className="text-[10px] text-gray-300 uppercase tracking-widest">Preview</span>
             </div>
 
-            <h3 className="text-[14px] font-semibold text-white/90 leading-snug">
-              {project.title}
-            </h3>
-
-            <p className="text-[12px] text-white/50 leading-relaxed">
-              {project.shortDesc}
-            </p>
-
-          </div>
+            <div className="flex flex-col gap-0">
+              <h3 className="text-[17px] font-semibold text-gray-900 leading-snug">
+                {project.title}
+              </h3>
+              <p className="text-[13px] text-gray-400 leading-relaxed line-clamp-2">
+                {project.shortDesc}
+              </p>
+            </div>
+          </button>
         ))}
       </div>
     </div>

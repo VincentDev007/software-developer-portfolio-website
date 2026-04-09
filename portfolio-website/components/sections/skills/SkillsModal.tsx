@@ -48,14 +48,13 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
     <AnimatePresence>
       {isOpen && (
         <>
-
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
           />
 
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -65,49 +64,45 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white/10 backdrop-blur-3xl rounded-3xl p-10 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+              className="relative backdrop-blur-3xl rounded-3xl p-10 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
               style={{
-                border: '1.5px solid rgba(255, 255, 255, 0.3)',
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 100%)',
+                border: '1.5px solid rgba(255,255,255,0.9)',
                 boxShadow: `
-                  0 1px 1px rgba(0, 0, 0, 0.15),
-                  0 2px 2px rgba(0, 0, 0, 0.15),
-                  0 4px 4px rgba(0, 0, 0, 0.15),
-                  0 8px 8px rgba(0, 0, 0, 0.15),
-                  0 16px 16px rgba(0, 0, 0, 0.15),
-                  inset 0 2px 8px rgba(255, 255, 255, 0.3),
-                  inset 0 -2px 8px rgba(0, 0, 0, 0.1)
+                  0 2px 4px rgba(0,0,0,0.04),
+                  0 8px 24px rgba(0,0,0,0.08),
+                  inset 0 1px 0 rgba(255,255,255,1)
                 `,
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%)'
               }}
             >
-
               <button
                 onClick={onClose}
-                className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+                className="absolute top-6 right-6 text-gray-400 hover:text-gray-700 transition-colors"
               >
                 <IoClose size={32} />
               </button>
 
-              <h2 className="text-3xl font-bold text-white mb-10 text-center">
+              <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
                 Skills & Technologies
               </h2>
 
               <div className="space-y-10">
                 {categoryOrder.map(category => (
                   <div key={category}>
-                    <h3 className="text-[11px] font-bold uppercase tracking-[0.12em] text-white/40 text-center mb-4">
+                    <h3 className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400 text-center mb-4">
                       {category === 'language' ? 'Languages' : category === 'tools' ? 'Tools' : category.charAt(0).toUpperCase() + category.slice(1)}
                     </h3>
                     <div className="flex flex-wrap justify-center gap-4">
                       {groupedSkills[category].map(skill => (
                         <div
                           key={skill.id}
-                          className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 group w-24"
+                          className="flex flex-col items-center justify-center p-4 rounded-xl bg-black/[0.03] hover:bg-black/[0.06] transition-all duration-300 group w-24"
+                          style={{ border: '1px solid rgba(0,0,0,0.06)' }}
                         >
                           <div className="mb-2 transform group-hover:scale-110 transition-transform duration-300">
                             {skill.icon}
                           </div>
-                          <span className="text-sm text-white/80 text-center font-medium">
+                          <span className="text-sm text-gray-600 text-center font-medium">
                             {skill.name}
                           </span>
                         </div>

@@ -10,22 +10,18 @@ export default function Navigation({ activeSection, setActiveSection }: Navigati
 
   return (
     <nav
-      className="relative bg-white/10 backdrop-blur-3xl rounded-full p-2 flex gap-2"
+      className="relative backdrop-blur-3xl rounded-full p-2 flex gap-2"
       style={{
-        border: '1.5px solid rgba(255, 255, 255, 0.3)',
+        border: '1.5px solid rgba(255, 255, 255, 0.9)',
         boxShadow: `
-          0 1px 1px rgba(0, 0, 0, 0.15),
-          0 2px 2px rgba(0, 0, 0, 0.15),
-          0 4px 4px rgba(0, 0, 0, 0.15),
-          0 8px 8px rgba(0, 0, 0, 0.15),
-          0 16px 16px rgba(0, 0, 0, 0.15),
-          inset 0 2px 8px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 8px rgba(0, 0, 0, 0.1)
+          0 1px 1px rgba(0, 0, 0, 0.04),
+          0 2px 4px rgba(0, 0, 0, 0.06),
+          0 8px 24px rgba(0, 0, 0, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 1)
         `,
-        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%)'
+        background: 'linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.6) 100%)'
       }}
     >
-
       {sections.map((section) => (
         <button
           key={section}
@@ -36,12 +32,11 @@ export default function Navigation({ activeSection, setActiveSection }: Navigati
             transition-all duration-300
             ${
               activeSection === section
-                ? 'bg-white text-black shadow-md'
-                : 'bg-transparent text-white/70 hover:bg-white/10'
+                ? 'bg-gray-900 text-white shadow-md'
+                : 'bg-transparent text-gray-500 hover:bg-black/5'
             }
           `}
         >
-
           {section === 'about' ? 'ABOUT ME' : section}
         </button>
       ))}
