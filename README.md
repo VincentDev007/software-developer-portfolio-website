@@ -1,6 +1,6 @@
 # Portfolio Website
 
-![version](https://img.shields.io/badge/version-0.2.0-blue)
+![version](https://img.shields.io/badge/version-1.0.0-blue)
 
 My personal software developer portfolio built with Next.js, React, and TypeScript.
 
