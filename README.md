@@ -1,33 +1,32 @@
 # Portfolio Website
 
+![version](https://img.shields.io/badge/version-0.2.0-blue)
+
 My personal software developer portfolio built with Next.js, React, and TypeScript.
 
 ## Features
-- Interactive project showcase
-- Skills overview
-- Experience timeline
+- Interactive project showcase with detail panel
+- Skills modal with grouped display
+- Experience timeline with animations
 - About section
-- Smooth animations and transitions
+- Scroll-based navigation with auto panel sync
+- Dark mode with deep slate theme
+- Smooth page transitions and glass effects
 
-## Tech Stack
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Framer Motion
+## View Live
+Visit the live site [here](https://your-portfolio-url.com).
 
-## Getting Started
-
+## Running from Source
 1. Clone the repo
-2. Navigate to the project folder
+2. Navigate to the project folder:
    ```
    cd portfolio-website
    ```
-3. Install dependencies
+3. Install dependencies:
    ```
    npm install
    ```
-4. Start the dev server
+4. Start the dev server:
    ```
    npm run dev
    ```
@@ -37,3 +36,10 @@ My personal software developer portfolio built with Next.js, React, and TypeScri
 ```
 npm run build
 ```
+
+## Tech Stack
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
