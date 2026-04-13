@@ -48,7 +48,7 @@ export default function ProjectsLeft({ selectedId, hoveredId, onSelectProject, o
               )}
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,0.75) 100%)' }} />
               {project.version && (
-                <div className="absolute top-3 left-3">
+                <div className="absolute top-3 right-3">
                   <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-white/80 px-2 py-0.5 rounded-full" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.15)' }}>
                     {project.version}
                   </span>
