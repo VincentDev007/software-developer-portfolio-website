@@ -28,7 +28,7 @@ export default function ProjectsLeft({ selectedId, hoveredId, onSelectProject, o
             className={`relative flex flex-col justify-between rounded-[14px] cursor-pointer transition-all duration-300 aspect-square text-left w-full overflow-hidden ${
               selectedId === project.id
                 ? 'bg-white opacity-100 -translate-y-1 scale-[1.02]'
-                : 'bg-white opacity-80 hover:opacity-100 hover:-translate-y-1 hover:scale-[1.02]'
+                : 'bg-white hover:-translate-y-1 hover:scale-[1.02]'
             }`}
             style={{
               border: selectedId === project.id

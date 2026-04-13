@@ -1,10 +1,11 @@
+const highlights = [
+  { bold: 'NSCC Programming student', rest: '— building real projects outside of class.' },
+  { bold: 'Backend-focused', rest: '— systems, APIs, and the logic under the hood.' },
+  { bold: 'Filmmaker on the side', rest: '— travel videos and short films.' },
+  { bold: 'Looking for an internship', rest: '— open to any opportunity to contribute and grow.' },
+];
+
 export default function AboutMeRight() {
-  const highlights = [
-    { bold: 'NSCC Programming student', rest: '— building real projects outside of class.' },
-    { bold: 'Backend-focused', rest: '— systems, APIs, and the logic under the hood.' },
-    { bold: 'Filmmaker on the side', rest: '— travel videos and short films.' },
-    { bold: 'Looking for an internship', rest: '— open to any opportunity to contribute and grow.' },
-  ];
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8 text-center">

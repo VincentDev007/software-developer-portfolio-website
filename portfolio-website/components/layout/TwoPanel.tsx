@@ -87,7 +87,7 @@ export default function TwoPanel() {
     handleScroll();
     el.addEventListener('scroll', handleScroll, { passive: true });
     return () => el.removeEventListener('scroll', handleScroll);
-  }, [activeSection, selectedProjectId, hoveredProjectId]);
+  }, []);
 
   useEffect(() => {
     const root = leftScrollRef.current;
@@ -115,6 +115,7 @@ export default function TwoPanel() {
       setActiveSection(current);
     };
 
+    handleScroll();
     root.addEventListener('scroll', handleScroll, { passive: true });
     return () => root.removeEventListener('scroll', handleScroll);
   }, []);
