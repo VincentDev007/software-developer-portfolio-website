@@ -1,28 +1,38 @@
 export default function AboutMeRight() {
+  const highlights = [
+    { bold: 'NSCC Programming student', rest: '— building real projects outside of class.' },
+    { bold: 'Backend-focused', rest: '— systems, APIs, and the logic under the hood.' },
+    { bold: 'Filmmaker on the side', rest: '— travel videos and short films.' },
+    { bold: 'Looking for an internship', rest: '— open to any opportunity to contribute and grow.' },
+  ];
+
   return (
-    <div>
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">About Me</h2>
+    <div className="flex flex-col items-center justify-center h-full gap-8 text-center">
 
-      <p className="text-gray-600 leading-relaxed mb-4">
-        I do the full software development lifecycle, but what pulls me most is the backend —
-        the logic, the systems, the way things actually work under the hood.
-        That curiosity started before I ever wrote a line of code. I've always been fascinated by
-        how computers communicate with their components.
-      </p>
+      <div className="flex flex-col gap-4">
+        <p className="text-[18px] text-gray-500 leading-[1.75] max-w-md">
+          Programming student at <span className="font-semibold text-gray-900">NSCC</span> with a <span className="font-semibold text-gray-900">backend focus</span> — I care most about the logic, the systems, and how things work under the hood. I started coding at <span className="font-semibold text-gray-900">22</span> and haven't stopped building since.
+        </p>
+        <p className="text-[18px] text-gray-500 leading-[1.75] max-w-md">
+          Outside of code I <span className="font-semibold text-gray-900">make films</span> — travel videos, short films, the occasional music video. It's taught me how to think about <span className="font-semibold text-gray-900">what an audience actually sees</span>, which turns out to be useful when building interfaces too.
+        </p>
+      </div>
 
-      <p className="text-gray-600 leading-relaxed mb-4">
-        One of my projects, Sydny, is a local desktop voice assistant powered by
-        Llama — built entirely from scratch. It's the kind of thing I like building:
-        software with real depth.
-      </p>
+      <div className="flex flex-wrap justify-center gap-2 max-w-md">
+        {highlights.map((item) => (
+          <span
+            key={item.bold}
+            className="px-4 py-2 rounded-full text-[13px] font-semibold text-gray-700"
+            style={{
+              background: 'rgba(0,0,0,0.04)',
+              border: '1.5px solid rgba(0,0,0,0.08)',
+            }}
+          >
+            {item.bold}
+          </span>
+        ))}
+      </div>
 
-      <p className="text-gray-600 leading-relaxed">
-        Outside of code, I'm a filmmaker. Travel videos, music videos, short films.
-        It's a serious creative outlet, and it bleeds into how I think about interfaces —
-        I approach UI the way a cinematographer approaches a frame.
-        Right now I'm working toward a software internship where I can go deep on
-        backend work and keep building things that matter.
-      </p>
     </div>
   );
 }

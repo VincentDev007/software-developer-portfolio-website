@@ -15,8 +15,8 @@ export default function ProjectsLeft({ selectedId, hoveredId, onSelectProject, o
   return (
     <div className="pb-8">
 
-      <h2 className="text-[22px] font-bold mb-2 text-gray-900">My Projects</h2>
-      <p className="text-[13px] text-gray-400 mb-6">Things I've built from scratch.</p>
+      <h2 className="text-[26px] font-bold mb-0 text-gray-900">My Projects</h2>
+      <p className="text-[14px] text-gray-400 font-bold mb-6 -mt-1">Things I've built from scratch.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {projects.map((project) => (
@@ -49,7 +49,7 @@ export default function ProjectsLeft({ selectedId, hoveredId, onSelectProject, o
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%)' }} />
               {project.version && (
                 <div className="absolute top-3 left-3">
-                  <span className="text-[10px] font-bold text-white/80 px-2 py-0.5 rounded-full" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.15)' }}>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-white/80 px-2 py-0.5 rounded-full" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.15)' }}>
                     {project.version}
                   </span>
                 </div>

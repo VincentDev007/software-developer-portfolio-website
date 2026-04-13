@@ -99,7 +99,7 @@ export default function TwoPanel() {
   }, []);
 
   const rightPanelContent = (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto h-full">
       <AnimatePresence mode="wait">
         {activeSection === SECTIONS.ABOUT && (
           <motion.div
@@ -108,6 +108,7 @@ export default function TwoPanel() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            className="h-full"
           >
             <AboutMeRight />
           </motion.div>
@@ -146,7 +147,7 @@ export default function TwoPanel() {
 
         <nav aria-label="Main navigation" className={`${showRightPanel ? 'hidden lg:flex' : 'flex'} flex-col min-h-0`}>
 
-          <div className="mb-0">
+          <div>
             <Navigation
               activeSection={activeSection}
               setActiveSection={scrollToSection}

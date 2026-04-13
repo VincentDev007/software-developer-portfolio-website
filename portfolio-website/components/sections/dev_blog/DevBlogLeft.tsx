@@ -14,8 +14,8 @@ export default function DevBlogLeft({ selectedId, hoveredId, onSelectPost, onHov
   return (
     <div className="pb-8">
 
-      <h2 className="text-[22px] font-bold mb-2 text-gray-900">Dev Blog</h2>
-      <p className="text-[13px] text-gray-400 mb-6">Thoughts on building, learning, and shipping.</p>
+      <h2 className="text-[26px] font-bold mb-0 text-gray-900">Dev Blog</h2>
+      <p className="text-[14px] text-gray-400 font-bold mb-6 -mt-1">Thoughts on building, learning, and shipping.</p>
 
       <div>
         {blogPosts.map((post) => (
@@ -24,7 +24,7 @@ export default function DevBlogLeft({ selectedId, hoveredId, onSelectPost, onHov
             onClick={() => onSelectPost(selectedId === post.id ? null : post.id)}
             onMouseEnter={() => onHoverPost(post.id)}
             onMouseLeave={() => onHoverPost(null)}
-            className={`flex flex-col gap-2.5 p-4 rounded-[14px] mb-3 cursor-pointer transition-all duration-300 text-left w-full bg-white ${
+            className={`flex flex-col justify-between h-[160px] p-4 rounded-[14px] mb-3 cursor-pointer transition-all duration-300 text-left w-full bg-white overflow-hidden ${
               selectedId === post.id
                 ? 'opacity-100 -translate-y-1 scale-[1.02]'
                 : 'opacity-90 hover:opacity-100 hover:-translate-y-1 hover:scale-[1.02]'
@@ -45,11 +45,11 @@ export default function DevBlogLeft({ selectedId, hoveredId, onSelectPost, onHov
               </span>
             </div>
 
-            <h3 className="text-[14px] font-semibold text-gray-900 leading-snug">
+            <h3 className="text-[26px] font-semibold text-gray-900 leading-snug mb-0">
               {post.title}
             </h3>
 
-            <p className="text-[12px] text-gray-400 leading-relaxed">
+            <p className="text-[13px] text-gray-500 font-semibold leading-relaxed -mt-4">
               {post.summary}
             </p>
 

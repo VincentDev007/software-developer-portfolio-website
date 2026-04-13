@@ -52,7 +52,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
     );
   }
 
-  const project = getProjectById(activeId!);
+  const project = getProjectById(activeId);
   if (!project) return null;
 
   return (
@@ -77,12 +77,12 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
         ))}
       </div>
 
-      <p className="text-[14px] text-gray-500 leading-[1.7]">
+      <p className="text-[18px] text-gray-500 leading-[1.7]">
         {project.shortDesc}
       </p>
 
       <div
-        className="w-full h-[260px] rounded-[12px] flex items-center justify-center mt-8"
+        className="w-full h-[340px] rounded-[12px] flex items-center justify-center mt-4"
         style={{
           background: 'rgba(0,0,0,0.03)',
           border: '1.5px solid rgba(0,0,0,0.07)',
@@ -124,10 +124,10 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
                 borderRight: i < arr.length - 1 ? '1.5px solid rgba(0,0,0,0.07)' : 'none',
               }}
             >
-              <span className="text-[9px] font-bold uppercase tracking-[0.1em] text-gray-400">
+              <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-gray-400">
                 {stat.label}
               </span>
-              <span className="text-[13px] font-semibold text-gray-800 text-center leading-tight px-2">
+              <span className="text-[14px] font-semibold text-gray-700 text-center leading-tight px-2">
                 {stat.value}
               </span>
             </div>
@@ -136,15 +136,15 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
       )}
 
       {project.highlights && project.highlights.length > 0 && (
-        <div className="flex flex-col gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">
+        <div className="flex flex-col gap-2 mt-4">
+          <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-gray-400">
             Key Highlights
           </span>
           <ul className="flex flex-col gap-2">
             {project.highlights.map((point, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0 bg-gray-300" />
-                <span className="text-[13px] text-gray-600 leading-[1.6]">{point}</span>
+                <span className="text-[15px] text-gray-600 leading-[1.6]">{point}</span>
               </li>
             ))}
           </ul>
@@ -178,7 +178,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
               border: '1.5px solid rgba(0,0,0,0.1)',
             }}
           >
-            ⌥ GitHub
+            ↗ GitHub
           </a>
         )}
       </div>
