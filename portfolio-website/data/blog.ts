@@ -12,7 +12,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: 'sydny-behind-the-scenes',
     tag: 'Behind the Scenes',
-    date: 'April 9, 2026',
+    date: 'October 4, 2025',
     readTime: '',
     title: 'Sydny',
     summary: '',
@@ -21,7 +21,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: 'cerebra-behind-the-scenes',
     tag: 'Behind the Scenes',
-    date: 'April 9, 2026',
+    date: 'October 27, 2025',
     readTime: '',
     title: 'Cerebra',
     summary: '',
@@ -30,7 +30,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: 'fly-behind-the-scenes',
     tag: 'Behind the Scenes',
-    date: 'April 12, 2026',
+    date: 'April 10, 2025',
     readTime: '',
     title: 'Fly',
     summary: '',

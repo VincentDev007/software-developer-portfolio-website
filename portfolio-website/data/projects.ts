@@ -11,6 +11,7 @@ export interface Project {
   title: string;
   thumbnail: string;
   shortDesc: string;
+  intro?: string;
   version?: string;
   tech: string[];
   stats?: ProjectStats;
@@ -28,6 +29,7 @@ export const projects: Project[] = [
     title: "Sydny",
     thumbnail: "/projects/sydny.png",
     shortDesc: "Offline voice assistant with wake word, Whisper, and Ollama.",
+    intro: "Sydny is a fully offline voice assistant built with Tauri and React, designed to run entirely on-device without any cloud dependency. It uses a custom wake word engine powered by Whisper for always-on voice detection and routes commands through a local LLM pipeline via Ollama.",
     version: "v0.5.0",
     tech: ["Tauri", "React", "TypeScript", "Python", "FastAPI", "SQLite", "Ollama", "Whisper"],
     stats: {
@@ -50,6 +52,7 @@ export const projects: Project[] = [
     title: "Cerebra",
     thumbnail: "/projects/cerebra.png",
     shortDesc: "Offline notes app with full-text search and sticky notes.",
+    intro: "Cerebra is a privacy-focused desktop notes app built with Electron and React that works entirely offline. It features full-text search powered by SQLite FTS5 for instant results across thousands of notes, alongside a sticky notes system that persists layout and position locally.",
     version: "v0.5.0",
     tech: ["Electron", "React", "TypeScript", "SQLite"],
     stats: {
@@ -72,6 +75,7 @@ export const projects: Project[] = [
     title: "Fly",
     thumbnail: "/projects/fly.png",
     shortDesc: "Android flight finder with live search and saved flights.",
+    intro: "Fly is an Android app that lets users search for real-time flights using the Amadeus API, returning live results without a backend. Flights can be saved locally with Room for offline access, wrapped in a clean Material Design UI optimized for one-handed use.",
     version: "Prototype",
     tech: ["Kotlin", "Android", "Retrofit", "Room", "Material Design"],
     stats: {

@@ -26,6 +26,9 @@ export default function TwoPanel() {
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);
   const [showRightPanel, setShowRightPanel] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isRightAtBottom, setIsRightAtBottom] = useState(false);
+  const [isRightAtTop, setIsRightAtTop] = useState(true);
+  const rightScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -33,16 +36,6 @@ export default function TwoPanel() {
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
-
-  const handleSelectProject = (id: string | null) => {
-    setSelectedProjectId(id);
-    if (id) setShowRightPanel(true);
-  };
-
-  const handleSelectPost = (id: string | null) => {
-    setSelectedBlogId(id);
-    if (id) setShowRightPanel(true);
-  };
 
   const handleBack = () => {
     setShowRightPanel(false);
@@ -67,6 +60,34 @@ export default function TwoPanel() {
     };
     map[section]?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
+
+  const handleSelectProject = (id: string | null) => {
+    setSelectedProjectId(id);
+    if (id) {
+      setShowRightPanel(true);
+      scrollToSection(SECTIONS.PROJECTS);
+    }
+  };
+
+  const handleSelectPost = (id: string | null) => {
+    setSelectedBlogId(id);
+    if (id) {
+      setShowRightPanel(true);
+      scrollToSection(SECTIONS.DEV_BLOG);
+    }
+  };
+
+  useEffect(() => {
+    const el = rightScrollRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      setIsRightAtBottom(el.scrollTop + el.clientHeight >= el.scrollHeight - 8);
+      setIsRightAtTop(el.scrollTop <= 8);
+    };
+    handleScroll();
+    el.addEventListener('scroll', handleScroll, { passive: true });
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, [activeSection, selectedProjectId, hoveredProjectId]);
 
   useEffect(() => {
     const root = leftScrollRef.current;
@@ -99,7 +120,7 @@ export default function TwoPanel() {
   }, []);
 
   const rightPanelContent = (
-    <div className="flex-1 overflow-y-auto h-full">
+    <div className="flex-1 overflow-y-auto h-full" ref={rightScrollRef}>
       <AnimatePresence mode="wait">
         {activeSection === SECTIONS.ABOUT && (
           <motion.div
@@ -120,7 +141,7 @@ export default function TwoPanel() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="h-full"
+            className="min-h-full flex flex-col"
           >
             <ProjectsRight selectedId={selectedProjectId} hoveredId={hoveredProjectId} />
           </motion.div>
@@ -193,13 +214,25 @@ export default function TwoPanel() {
 
         <main
           id="main-content"
-          className="hidden lg:flex relative bg-white rounded-3xl p-8 overflow-hidden flex-col"
+          className="hidden lg:flex relative bg-white rounded-3xl p-8 overflow-hidden flex-col mb-[-2rem]"
           style={{
             border: '1.5px solid rgba(0,0,0,0.08)',
             boxShadow: '0 4px 8px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.12)',
           }}
         >
           {rightPanelContent}
+          {!isRightAtTop && (
+            <div
+              className="pointer-events-none absolute top-0 left-0 right-0 h-24 rounded-t-3xl"
+              style={{ background: 'linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0.85) 60%, rgba(255,255,255,1))' }}
+            />
+          )}
+          {!isRightAtBottom && (
+            <div
+              className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 rounded-b-3xl"
+              style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.85) 60%, rgba(255,255,255,1))' }}
+            />
+          )}
         </main>
       </div>
 

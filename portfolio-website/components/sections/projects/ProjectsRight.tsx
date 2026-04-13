@@ -46,7 +46,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
   const activeId = selectedId ?? hoveredId;
   if (!activeId) {
     return (
-      <div className="h-full flex items-center justify-center text-center opacity-50">
+      <div className="flex-1 flex items-center justify-center text-center opacity-50">
         <p className="text-[28px] font-semibold text-gray-500">Select a project</p>
       </div>
     );
@@ -56,11 +56,44 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
   if (!project) return null;
 
   return (
-    <div className="flex flex-col h-full gap-3">
+    <div className="flex flex-col gap-3">
 
-      <h1 className="text-[36px] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em]">
-        {project.title}
-      </h1>
+      <div className="flex items-start justify-between gap-4">
+        <h1 className="text-[36px] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em]">
+          {project.title}
+        </h1>
+        <div className="flex gap-2 flex-shrink-0 pt-1">
+          {project.links.live && (
+            <a
+              href={project.links.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-[18px] py-[9px] text-[12px] font-semibold rounded-[10px] transition-all"
+              style={{
+                background: 'rgba(99,102,241,0.1)',
+                border: '1.5px solid rgba(99,102,241,0.25)',
+                color: '#6366f1',
+              }}
+            >
+              ↗ Live Demo
+            </a>
+          )}
+          {project.links.github && (
+            <a
+              href={project.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-[18px] py-[9px] text-[12px] font-semibold text-gray-700 rounded-[10px] transition-all"
+              style={{
+                background: 'rgba(0,0,0,0.05)',
+                border: '1.5px solid rgba(0,0,0,0.1)',
+              }}
+            >
+              ↗ GitHub
+            </a>
+          )}
+        </div>
+      </div>
 
       <div className="flex flex-wrap gap-2">
         {project.tech.map((t) => (
@@ -77,8 +110,8 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
         ))}
       </div>
 
-      <p className="text-[18px] text-gray-500 leading-[1.7]">
-        {project.shortDesc}
+      <p className="text-[16px] text-gray-500 leading-[1.7]">
+        {project.intro ?? project.shortDesc}
       </p>
 
       <div
@@ -151,37 +184,6 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
         </div>
       )}
 
-      <div className="flex gap-2 flex-wrap mt-auto pt-4">
-        {project.links.live && (
-          <a
-            href={project.links.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-[18px] py-[9px] text-[12px] font-semibold rounded-[10px] transition-all"
-            style={{
-              background: 'rgba(99,102,241,0.1)',
-              border: '1.5px solid rgba(99,102,241,0.25)',
-              color: '#6366f1',
-            }}
-          >
-            ↗ Live Demo
-          </a>
-        )}
-        {project.links.github && (
-          <a
-            href={project.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-[18px] py-[9px] text-[12px] font-semibold text-gray-700 rounded-[10px] transition-all"
-            style={{
-              background: 'rgba(0,0,0,0.05)',
-              border: '1.5px solid rgba(0,0,0,0.1)',
-            }}
-          >
-            ↗ GitHub
-          </a>
-        )}
-      </div>
 
     </div>
   );
