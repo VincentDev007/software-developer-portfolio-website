@@ -47,9 +47,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
   if (!activeId) {
     return (
       <div className="h-full flex items-center justify-center text-center opacity-50">
-        <div>
-          <p className="text-[15px] text-gray-500">Select a project</p>
-        </div>
+        <p className="text-[28px] font-semibold text-gray-500">Select a project</p>
       </div>
     );
   }
@@ -97,7 +95,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
             <div
               className="w-8 h-8 rounded-[8px] flex items-center justify-center text-[13px]"
               style={{
-                background: 'rgba(0,0,0,0.08)',
+                background: 'rgba(0,0,0,0.06)',
                 border: '1px solid rgba(0,0,0,0.1)',
               }}
             >
@@ -107,6 +105,51 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
           </div>
         )}
       </div>
+
+      {project.stats && (
+        <div
+          className="w-full grid grid-cols-4 rounded-[12px] overflow-hidden"
+          style={{ border: '1.5px solid rgba(0,0,0,0.07)' }}
+        >
+          {[
+            { label: 'TIMELINE', value: project.stats.timeline },
+            { label: 'ROLE', value: project.stats.role },
+            { label: 'TEAM', value: project.stats.team },
+            { label: 'STATUS', value: project.stats.status },
+          ].map((stat, i, arr) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center justify-center py-4 gap-1"
+              style={{
+                borderRight: i < arr.length - 1 ? '1.5px solid rgba(0,0,0,0.07)' : 'none',
+              }}
+            >
+              <span className="text-[9px] font-bold uppercase tracking-[0.1em] text-gray-400">
+                {stat.label}
+              </span>
+              <span className="text-[13px] font-semibold text-gray-800 text-center leading-tight px-2">
+                {stat.value}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {project.highlights && project.highlights.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">
+            Key Highlights
+          </span>
+          <ul className="flex flex-col gap-2">
+            {project.highlights.map((point, i) => (
+              <li key={i} className="flex items-start gap-2.5">
+                <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0 bg-gray-300" />
+                <span className="text-[13px] text-gray-600 leading-[1.6]">{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="flex gap-2 flex-wrap mt-auto pt-4">
         {project.links.live && (

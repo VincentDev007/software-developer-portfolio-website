@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { skills, getSkillsByCategory } from '@/data/skills'
+import { getSkillsByCategory } from '@/data/skills'
 
 interface SkillsModalProps {
   isOpen: boolean
@@ -64,15 +64,10 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative backdrop-blur-3xl rounded-3xl p-10 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+              className="relative bg-white rounded-3xl p-10 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
               style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 100%)',
-                border: '1.5px solid rgba(255,255,255,0.9)',
-                boxShadow: `
-                  0 2px 4px rgba(0,0,0,0.04),
-                  0 8px 24px rgba(0,0,0,0.08),
-                  inset 0 1px 0 rgba(255,255,255,1)
-                `,
+                border: '1.5px solid rgba(0,0,0,0.08)',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.12)',
               }}
             >
               <button

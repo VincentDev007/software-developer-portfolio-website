@@ -1,12 +1,16 @@
+'use client'
+
 import { blogPosts } from '@/data/blog';
+import { getCardShadow } from '@/utils/shadows';
 
 interface DevBlogLeftProps {
   selectedId: string | null;
+  hoveredId: string | null;
   onSelectPost: (id: string | null) => void;
   onHoverPost: (id: string | null) => void;
 }
 
-export default function DevBlogLeft({ selectedId, onSelectPost, onHoverPost }: DevBlogLeftProps) {
+export default function DevBlogLeft({ selectedId, hoveredId, onSelectPost, onHoverPost }: DevBlogLeftProps) {
   return (
     <div className="pb-8">
 
@@ -20,15 +24,16 @@ export default function DevBlogLeft({ selectedId, onSelectPost, onHoverPost }: D
             onClick={() => onSelectPost(selectedId === post.id ? null : post.id)}
             onMouseEnter={() => onHoverPost(post.id)}
             onMouseLeave={() => onHoverPost(null)}
-            className={`flex flex-col gap-2.5 p-4 rounded-[14px] mb-3 cursor-pointer transition-all duration-200 text-left w-full ${
+            className={`flex flex-col gap-2.5 p-4 rounded-[14px] mb-3 cursor-pointer transition-all duration-300 text-left w-full bg-white ${
               selectedId === post.id
-                ? 'bg-white/90 opacity-100'
-                : 'bg-white/50 opacity-80 hover:bg-white/75 hover:opacity-100'
+                ? 'opacity-100 -translate-y-1 scale-[1.02]'
+                : 'opacity-90 hover:opacity-100 hover:-translate-y-1 hover:scale-[1.02]'
             }`}
             style={{
               border: selectedId === post.id
-                ? '1.5px solid rgba(0,0,0,0.12)'
-                : '1.5px solid rgba(0,0,0,0.06)'
+                ? '1.5px solid rgba(0,0,0,0.10)'
+                : '1.5px solid rgba(0,0,0,0.06)',
+              boxShadow: getCardShadow(post.id, selectedId, hoveredId),
             }}
           >
             <div className="flex items-center justify-between gap-2">
@@ -49,7 +54,7 @@ export default function DevBlogLeft({ selectedId, onSelectPost, onHoverPost }: D
             </p>
 
             <span className="text-[11px] text-gray-400">
-              ⏱ {post.readTime}
+              {post.readTime}
             </span>
 
           </button>

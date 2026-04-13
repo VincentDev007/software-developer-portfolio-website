@@ -25,7 +25,7 @@ export default function SocialIcons() {
       </a>
 
       <a
-        href={`mailto:${process.env.CONTACT_EMAIL}`}
+        href={process.env.CONTACT_EMAIL ? `mailto:${process.env.CONTACT_EMAIL}` : '#'}
         className="w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-black/5 hover:-translate-y-1"
         aria-label="Email contact"
       >
@@ -33,7 +33,7 @@ export default function SocialIcons() {
       </a>
 
       <a
-        href={`tel:${process.env.CONTACT_PHONE}`}
+        href={process.env.CONTACT_PHONE ? `tel:${process.env.CONTACT_PHONE}` : '#'}
         className="w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-black/5 hover:-translate-y-1"
         aria-label="Phone contact"
       >

@@ -3,7 +3,16 @@ import Image from 'next/image';
 export default function ProfileCard({ compact = false }: { compact?: boolean }) {
   if (compact) {
     return (
-      <div className="mb-5 px-10 mt-6">
+      <div className="mb-5 px-10 mt-6 flex items-center gap-3">
+        <div className="w-10 h-10 flex-shrink-0 rounded-full overflow-hidden bg-white">
+          <Image
+            src="/avatar.png"
+            alt="Vincent Agra"
+            width={40}
+            height={40}
+            className="w-full h-full object-cover"
+          />
+        </div>
         <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
           Vincent Agra
         </h2>
@@ -23,7 +32,7 @@ export default function ProfileCard({ compact = false }: { compact?: boolean }) 
         </p>
       </div>
 
-      <div className="w-32 h-32 flex-shrink-0 rounded-full overflow-hidden shadow-lg mr-20">
+      <div className="w-32 h-32 flex-shrink-0 rounded-full overflow-hidden shadow-lg mr-20 bg-white">
         <Image
           src="/avatar.png"
           alt="Vincent Agra"

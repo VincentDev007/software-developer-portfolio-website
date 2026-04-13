@@ -24,17 +24,24 @@ export default function TechStackFooter() {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden py-6">
+    <div
+      ref={containerRef}
+      className="w-full overflow-hidden py-3"
+      style={{
+        maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+      }}
+    >
       <div ref={scrollRef} className="flex gap-12 animate-scroll">
         {skills.map((skill) => (
           <div
             key={`tech-1-${skill.id}`}
             className="flex items-center gap-3 flex-shrink-0"
           >
-            <div className="text-gray-400">
+            <div className="text-gray-600">
               {skill.icon}
             </div>
-            <span className="text-sm font-medium text-gray-400 whitespace-nowrap">
+            <span className="text-sm font-medium text-gray-600 whitespace-nowrap">
               {skill.name}
             </span>
           </div>
@@ -45,10 +52,10 @@ export default function TechStackFooter() {
             key={`tech-2-${skill.id}`}
             className="flex items-center gap-3 flex-shrink-0"
           >
-            <div className="text-gray-400">
+            <div className="text-gray-600">
               {skill.icon}
             </div>
-            <span className="text-sm font-medium text-gray-400 whitespace-nowrap">
+            <span className="text-sm font-medium text-gray-600 whitespace-nowrap">
               {skill.name}
             </span>
           </div>

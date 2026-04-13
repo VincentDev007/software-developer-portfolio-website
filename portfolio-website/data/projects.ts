@@ -1,14 +1,20 @@
 
+export interface ProjectStats {
+  timeline: string;
+  role: string;
+  team: string;
+  status: string;
+}
+
 export interface Project {
   id: string;
   title: string;
-  emoji: string;
   thumbnail: string;
   shortDesc: string;
-  oneLiner: string;
-  role: string;
-  challenge: string;
+  version?: string;
   tech: string[];
+  stats?: ProjectStats;
+  highlights?: string[];
   links: {
     github?: string;
     live?: string;
@@ -18,48 +24,68 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "weather-tracker",
-    title: "Weather Tracker",
-    emoji: "☁️",
-    thumbnail: "/projects/weather-tracker.png",
-    shortDesc: "Real-time weather app with 5-day forecasts and location search functionality.",
-    oneLiner: "Search any city and get real-time weather plus a 5-day forecast — built around the OpenWeather API.",
-    role: "Solo project — built the full app including the API integration, UI layout, and responsive styling.",
-    challenge: "OpenWeather returns Unix timestamps. Converting to readable local times across timezones required understanding JS Date offsets properly rather than guessing.",
-    tech: ["React", "TypeScript", "Tailwind CSS", "OpenWeather API"],
+    id: "sydny",
+    title: "Sydny",
+    thumbnail: "/projects/sydny.png",
+    shortDesc: "Offline voice assistant with wake word, Whisper, and Ollama.",
+    version: "v0.5.0",
+    tech: ["Tauri", "React", "TypeScript", "Python", "FastAPI", "SQLite", "Ollama", "Whisper"],
+    stats: {
+      timeline: "3 Months",
+      role: "Sole Developer",
+      team: "Solo",
+      status: "In Development",
+    },
+    highlights: [
+      "Built a wake word engine using Whisper to enable fully offline voice detection",
+      "Implemented a local LLM pipeline via Ollama, keeping all data on-device with no cloud dependency",
+      "Designed a cross-platform desktop app with Tauri, reducing binary size vs Electron by over 60%",
+    ],
     links: {
-      github: "https://github.com/yourusername/weather-tracker",
-      live: "https://weather-tracker-demo.vercel.app",
+      github: "https://github.com/VincentDev007/sydny-voice-assistant-automation-tool",
     },
   },
   {
-    id: "ride-scope",
-    title: "Ride Scope",
-    emoji: "🚗",
-    thumbnail: "/projects/ride-scope.png",
-    shortDesc: "Vehicle tracking and analytics platform for ride-sharing services.",
-    oneLiner: "Track and analyze ride-sharing fleets in real time — GPS positions, trip history, and driver metrics in one place.",
-    role: "Solo project — built end to end, from the PostgreSQL schema to the React dashboard and Google Maps integration.",
-    challenge: "Real-time GPS updates were hammering the database on every ping. Fixed it by batching writes every 2 seconds and serving live positions from an in-memory store.",
-    tech: ["Next.js", "Node.js", "PostgreSQL", "Google Maps API", "Chart.js"],
+    id: "cerebra",
+    title: "Cerebra",
+    thumbnail: "/projects/cerebra.png",
+    shortDesc: "Offline notes app with full-text search and sticky notes.",
+    version: "v0.5.0",
+    tech: ["Electron", "React", "TypeScript", "SQLite"],
+    stats: {
+      timeline: "2 Months",
+      role: "Sole Developer",
+      team: "Solo",
+      status: "In Development",
+    },
+    highlights: [
+      "Built full-text search using SQLite FTS5, enabling instant search across thousands of notes",
+      "Implemented a sticky notes system with persistent positioning stored locally",
+      "Packaged as an offline-first Electron app with no account or internet required",
+    ],
     links: {
-      github: "https://github.com/yourusername/ride-scope",
-      live: "https://ride-scope.vercel.app",
+      github: "https://github.com/VincentDev007/cerebra-notes-app",
     },
   },
   {
-    id: "contacts-app",
-    title: "Contacts App",
-    emoji: "📇",
-    thumbnail: "/projects/contacts-app.png",
-    shortDesc: "Modern contact management system with search, filtering, and cloud sync.",
-    oneLiner: "Full CRUD contacts manager with real-time search, category filtering, and Firebase cloud sync across devices.",
-    role: "Solo project — owned the full stack: Firebase setup, real-time sync logic, and the Material UI component layer.",
-    challenge: "Firebase listeners fire on every change, causing search to flicker mid-type. Fixed by debouncing the input and only re-querying after the user pauses.",
-    tech: ["React", "Firebase", "Material UI", "TypeScript"],
-    links: {
-      github: "https://github.com/yourusername/contacts-app",
+    id: "fly",
+    title: "Fly",
+    thumbnail: "/projects/fly.png",
+    shortDesc: "Android flight finder with live search and saved flights.",
+    version: "Prototype",
+    tech: ["Kotlin", "Android", "Retrofit", "Room", "Material Design"],
+    stats: {
+      timeline: "1 Month",
+      role: "Sole Developer",
+      team: "Solo",
+      status: "Prototype",
     },
+    highlights: [
+      "Built live flight search using Retrofit to consume the Amadeus API with real-time results",
+      "Implemented local saved flights with Room database for offline access",
+      "Designed a clean Material Design UI optimized for one-handed mobile use",
+    ],
+    links: {},
   },
 ];
 

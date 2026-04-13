@@ -11,16 +11,32 @@ export default function DevBlogRight({ selectedId, hoveredId }: DevBlogRightProp
   if (!activeId) {
     return (
       <div className="h-full flex items-center justify-center text-center opacity-50">
-        <div>
-          <div className="text-[56px] mb-[14px]">✍️</div>
-          <p className="text-[16px] text-gray-500">Select a post to read</p>
-        </div>
+        <p className="text-[28px] font-semibold text-gray-500">Select a post to read</p>
       </div>
     );
   }
 
   const post = getBlogPostById(activeId!);
   if (!post) return null;
+
+  if (!post.body) {
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex items-center gap-3 mb-[28px] flex-wrap">
+          <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-3 py-1 rounded-full bg-black/5 text-gray-500">
+            {post.tag}
+          </span>
+          <span className="text-[12px] text-gray-400">{post.date}</span>
+        </div>
+        <div className="text-[40px] font-bold text-gray-900 tracking-[-0.02em] leading-[1.15] mb-[28px]">
+          {post.title}
+        </div>
+        <div className="flex-1 flex items-center justify-center opacity-40">
+          <p className="text-[22px] font-semibold text-gray-500">Coming Soon</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -30,7 +46,7 @@ export default function DevBlogRight({ selectedId, hoveredId }: DevBlogRightProp
           {post.tag}
         </span>
         <span className="text-[12px] text-gray-400">{post.date}</span>
-        <span className="text-[12px] text-gray-400">⏱ {post.readTime}</span>
+        <span className="text-[12px] text-gray-400">{post.readTime}</span>
       </div>
 
       <div className="text-[40px] font-bold text-gray-900 tracking-[-0.02em] leading-[1.15] mb-[28px]">

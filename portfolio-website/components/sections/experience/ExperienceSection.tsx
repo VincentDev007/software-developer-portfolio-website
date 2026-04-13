@@ -17,7 +17,7 @@ export default function ExperienceSection() {
       <div className="w-full max-w-[1400px] grid grid-cols-1 lg:grid-cols-2 gap-10">
 
 
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10 min-h-[600px]">
+        <div className="bg-white rounded-3xl p-10 border border-black/8 min-h-[600px]">
           <p className="text-white/50 text-xs uppercase tracking-wider text-center mb-8">
             Experience Timeline
           </p>
@@ -27,7 +27,7 @@ export default function ExperienceSection() {
           />
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10 min-h-[600px]">
+        <div className="bg-white rounded-3xl p-10 border border-black/8 min-h-[600px]">
           <p className="text-white/50 text-xs uppercase tracking-wider text-center mb-8">
             Details
           </p>

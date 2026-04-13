@@ -6,67 +6,18 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+.shadow-overflow {
+  overflow-x: clip;
+  overflow-clip-margin: 32px;
+}
 
 @theme {
-  /* Custom backdrop blur values */
-  --blur-xs: 2px;
-  --blur-sm: 4px;
-  --blur-md: 8px;
-  --blur-lg: 12px;
-  --blur-xl: 16px;
-  --blur-2xl: 24px;
-  --blur-3xl: 40px;
-
-  /* Custom animations */
-  --animate-mesh-move: mesh-move 20s ease-in-out infinite;
-  --animate-mesh-rotate: mesh-rotate 30s linear infinite;
-  --animate-shimmer: shimmer 2s linear infinite;
-  --animate-float: float 6s ease-in-out infinite;
   --animate-scroll: scroll 40s linear infinite;
-  --animate-fadeIn: fadeIn 0.4s ease-in-out;
 }
 
-/* Keyframe definitions */
-@keyframes mesh-move {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-}
-
-/* Keyframe for rotating mesh */  
-@keyframes mesh-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Keyframe for shimmer effect */
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-}
-
-/* Keyframe for floating effect */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-/* Keyframe for infinite scroll */
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
-}
-
-/* Keyframe for fade in effect */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 
