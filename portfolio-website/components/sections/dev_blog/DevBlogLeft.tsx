@@ -24,7 +24,7 @@ export default function DevBlogLeft({ selectedId, hoveredId, onSelectPost, onHov
             onClick={() => onSelectPost(selectedId === post.id ? null : post.id)}
             onMouseEnter={() => onHoverPost(post.id)}
             onMouseLeave={() => onHoverPost(null)}
-            className={`flex flex-col justify-between h-[160px] p-4 rounded-[14px] mb-3 cursor-pointer transition-all duration-300 text-left w-full bg-white overflow-hidden ${
+            className={`flex flex-col justify-between min-h-[160px] p-4 rounded-[14px] mb-3 cursor-pointer transition-all duration-300 text-left w-full bg-white ${
               selectedId === post.id
                 ? 'opacity-100 -translate-y-1 scale-[1.02]'
                 : 'opacity-90 hover:opacity-100 hover:-translate-y-1 hover:scale-[1.02]'
@@ -49,7 +49,7 @@ export default function DevBlogLeft({ selectedId, hoveredId, onSelectPost, onHov
               {post.title}
             </h3>
 
-            <p className="text-[13px] text-gray-500 font-semibold leading-relaxed -mt-4">
+            <p className="text-[13px] text-gray-500 font-semibold leading-relaxed mt-1">
               {post.summary}
             </p>
 

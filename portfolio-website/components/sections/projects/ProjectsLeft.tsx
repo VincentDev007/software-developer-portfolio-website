@@ -16,7 +16,7 @@ export default function ProjectsLeft({ selectedId, hoveredId, onSelectProject, o
     <div className="pb-8">
 
       <h2 className="text-[26px] font-bold mb-0 text-gray-900">My Projects</h2>
-      <p className="text-[14px] text-gray-400 font-bold mb-6 -mt-1">Things I've built from scratch.</p>
+      <p className="text-[14px] text-gray-400 font-bold mb-6 -mt-1">Things I've built.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {projects.map((project) => (
