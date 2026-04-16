@@ -15,7 +15,7 @@ export const blogPosts: BlogPost[] = [
     date: 'October 4, 2025',
     readTime: '0 min read',
     title: 'Sydny',
-    summary: 'A look at how I built a fully offline voice assistant — wake word detection, local LLM routing, and what it\'s like shipping a Tauri desktop app from scratch.',
+    summary: 'A look at how I built a desktop AI assistant — local LLM routing, persistent memory, and shipping a Tauri app from scratch.',
     body: '',
   },
   {
@@ -24,16 +24,7 @@ export const blogPosts: BlogPost[] = [
     date: 'October 27, 2025',
     readTime: '0 min read',
     title: 'Cerebra',
-    summary: 'How I built an offline-first notes app with instant full-text search using SQLite FTS5, and why I chose Electron despite its size.',
-    body: '',
-  },
-  {
-    id: 'fly-behind-the-scenes',
-    tag: 'Behind the Scenes',
-    date: 'April 10, 2025',
-    readTime: '0 min read',
-    title: 'Fly',
-    summary: 'Behind the prototype — building a real-time Android flight search app with Retrofit and the Amadeus API in under a month.',
+    summary: 'Behind the build — SQLite FTS5 search, nested folders, and why I chose Electron for Cerebra.',
     body: '',
   },
 ];

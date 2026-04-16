@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Vincent Agra — Software Developer",
-  description: "Software developer specializing in backend systems and full stack software development. Based in Nova Scotia.",
+  description: "Software developer building LLM tools, dev utilities, and mobile apps. Programming student at NSCC with a backend focus. Based in Nova Scotia.",
 };
 
 export default function RootLayout({

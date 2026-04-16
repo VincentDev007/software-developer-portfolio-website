@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { FADE_TOP, FADE_BOTTOM } from '@/utils/gradients'
 import { useEffect, useRef, useState } from 'react'
 import { getSkillsByCategory } from '@/data/skills'
 
@@ -85,28 +86,28 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
                 boxShadow: '0 2px 4px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.12)',
               }}
             >
-<div ref={scrollRef} className="overflow-y-auto max-h-[90vh] p-10">
-                <h2 className="text-[36px] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em] mb-10 text-center">
+<div ref={scrollRef} className="overflow-y-auto max-h-[90vh] p-5 lg:p-10">
+                <h2 className="text-[24px] lg:text-[36px] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em] mb-6 lg:mb-10 text-center">
                   Skills & Technologies
                 </h2>
 
-                <div className="space-y-10">
+                <div className="space-y-6 lg:space-y-10">
                   {categoryOrder.map(category => (
                     <div key={category}>
                       <h3 className="text-[14px] font-bold uppercase tracking-[0.12em] text-gray-400 text-center mb-4">
                         {category === 'language' ? 'Languages' : category === 'llm' ? 'LLM' : category.charAt(0).toUpperCase() + category.slice(1)}
                       </h3>
-                      <div className="flex flex-wrap justify-center gap-4">
+                      <div className="flex flex-wrap justify-center gap-3 lg:gap-4">
                         {groupedSkills[category].map(skill => (
                           <div
                             key={skill.id}
-                            className="flex flex-col items-center justify-center p-4 rounded-xl bg-black/[0.03] hover:bg-black/[0.06] transition-all duration-300 group w-24"
+                            className="flex flex-col items-center justify-center p-3 lg:p-4 rounded-xl bg-black/[0.03] hover:bg-black/[0.06] transition-all duration-300 group w-20 lg:w-24"
                             style={{ border: '1px solid rgba(0,0,0,0.06)' }}
                           >
                             <div className="mb-2 transform group-hover:scale-110 transition-transform duration-300">
                               {skill.icon}
                             </div>
-                            <span className="text-sm text-gray-600 text-center font-medium">
+                            <span className="text-xs lg:text-sm text-gray-600 text-center font-medium">
                               {skill.name}
                             </span>
                           </div>
@@ -120,13 +121,13 @@ export default function SkillsModal({ isOpen, onClose }: SkillsModalProps) {
               {!isAtTop && (
                 <div
                   className="pointer-events-none absolute top-0 left-0 right-0 h-24 rounded-t-3xl"
-                  style={{ background: 'linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0.85) 60%, rgba(255,255,255,1))' }}
+                  style={{ background: FADE_TOP }}
                 />
               )}
               {!isAtBottom && (
                 <div
                   className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 rounded-b-3xl"
-                  style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.85) 60%, rgba(255,255,255,1))' }}
+                  style={{ background: FADE_BOTTOM }}
                 />
               )}
             </motion.div>

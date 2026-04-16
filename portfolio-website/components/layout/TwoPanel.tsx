@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SECTIONS } from '@/utils/sections';
+import { FADE_TOP, FADE_BOTTOM } from '@/utils/gradients';
 
 import Navigation from './Navigation';
 import SocialIcons from './SocialIcons';
@@ -41,6 +42,18 @@ export default function TwoPanel() {
     setShowRightPanel(false);
     setSelectedProjectId(null);
     setSelectedBlogId(null);
+    // After the left panel becomes visible again, scroll to the active section.
+    // Double rAF ensures the DOM has fully re-rendered before scrolling.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const map: Record<string, React.RefObject<HTMLDivElement | null>> = {
+          [SECTIONS.ABOUT]: aboutRef,
+          [SECTIONS.PROJECTS]: projectsRef,
+          [SECTIONS.DEV_BLOG]: devblogRef,
+        };
+        map[activeSection]?.current?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      });
+    });
   };
 
   const leftScrollRef = useRef<HTMLDivElement>(null);
@@ -64,14 +77,18 @@ export default function TwoPanel() {
   const handleSelectProject = (id: string | null) => {
     setSelectedProjectId(id);
     if (id) {
+      setActiveSection(SECTIONS.PROJECTS);
       setShowRightPanel(true);
-      scrollToSection(SECTIONS.PROJECTS);
+      if (activeSection !== SECTIONS.PROJECTS) {
+        scrollToSection(SECTIONS.PROJECTS);
+      }
     }
   };
 
   const handleSelectPost = (id: string | null) => {
     setSelectedBlogId(id);
     if (id) {
+      setActiveSection(SECTIONS.DEV_BLOG);
       setShowRightPanel(true);
       scrollToSection(SECTIONS.DEV_BLOG);
     }
@@ -109,6 +126,7 @@ export default function TwoPanel() {
         }
       }
 
+      // Force DEV_BLOG when fully scrolled to bottom — midpoint detection misses the last section
       const isAtBottom = root.scrollTop + root.clientHeight >= root.scrollHeight - 10;
       if (isAtBottom) current = SECTIONS.DEV_BLOG;
 
@@ -120,6 +138,7 @@ export default function TwoPanel() {
     return () => root.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Defined as a variable so it can be rendered in both the desktop panel and the mobile overlay
   const rightPanelContent = (
     <div className="flex-1 overflow-y-auto h-full" ref={rightScrollRef}>
       <AnimatePresence mode="wait">
@@ -165,7 +184,7 @@ export default function TwoPanel() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 min-h-0 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 flex-1 min-h-0 mb-4 lg:mb-8">
 
         <nav aria-label="Main navigation" className={`${showRightPanel ? 'hidden lg:flex' : 'flex'} flex-col min-h-0`}>
 
@@ -175,14 +194,13 @@ export default function TwoPanel() {
               setActiveSection={scrollToSection}
             />
 
-            {activeSection !== SECTIONS.ABOUT && (
-              <div className="flex items-start justify-between">
-                <SocialIcons />
+            {/* Always render both so no layout shift occurs during scroll — visibility hides without removing space */}
+            <div className="flex items-start justify-between">
+              <SocialIcons />
+              <div className={activeSection === SECTIONS.ABOUT ? 'invisible' : 'visible'}>
                 <ProfileCard compact={true} />
               </div>
-            )}
-
-            {activeSection === SECTIONS.ABOUT && <SocialIcons />}
+            </div>
           </div>
 
           <div className="flex-1 overflow-y-auto scrollbar-hide shadow-overflow px-8 -mx-8 pb-6 -mb-6" ref={leftScrollRef}>
@@ -225,13 +243,13 @@ export default function TwoPanel() {
           {!isRightAtTop && (
             <div
               className="pointer-events-none absolute top-0 left-0 right-0 h-24 rounded-t-3xl"
-              style={{ background: 'linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0.85) 60%, rgba(255,255,255,1))' }}
+              style={{ background: FADE_TOP }}
             />
           )}
           {!isRightAtBottom && (
             <div
               className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 rounded-b-3xl"
-              style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.85) 60%, rgba(255,255,255,1))' }}
+              style={{ background: FADE_BOTTOM }}
             />
           )}
         </main>
@@ -240,7 +258,7 @@ export default function TwoPanel() {
       <AnimatePresence>
         {isMobile && showRightPanel && (
           <motion.div
-            className="fixed inset-0 z-40 bg-white flex flex-col p-8 overflow-hidden"
+            className="fixed inset-0 z-40 bg-white flex flex-col p-4 sm:p-8 overflow-hidden"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}

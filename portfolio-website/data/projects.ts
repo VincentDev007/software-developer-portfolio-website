@@ -28,8 +28,8 @@ export const projects: Project[] = [
     id: "sydny",
     title: "Sydny",
     thumbnail: "/projects/sydny.png",
-    shortDesc: "Offline voice assistant with wake word, Whisper, and Ollama.",
-    intro: "Sydny is a fully offline voice assistant built with Tauri and React, designed to run entirely on-device without any cloud dependency. It uses a custom wake word engine powered by Whisper for always-on voice detection and routes commands through a local LLM pipeline via Ollama.",
+    shortDesc: "Offline desktop AI assistant powered by Whisper and Ollama.",
+    intro: "Sydny is a desktop AI assistant built with Tauri and React. It understands voice commands to open apps, manage files, and control your system — and holds real conversations with a persistent memory, all routed through a local LLM via Ollama with no cloud dependency.",
     version: "v0.5.0",
     tech: ["Tauri", "React", "TypeScript", "Python", "FastAPI", "SQLite", "Ollama", "Whisper"],
     stats: {
@@ -39,20 +39,21 @@ export const projects: Project[] = [
       status: "In Development",
     },
     highlights: [
-      "Built a wake word engine using Whisper to enable fully offline voice detection",
-      "Implemented a local LLM pipeline via Ollama, keeping all data on-device with no cloud dependency",
-      "Designed a cross-platform desktop app with Tauri, reducing binary size vs Electron by over 60%",
+      "Built a custom Ollama model that returns structured JSON intents for reliable voice command routing",
+      "Implemented persistent conversation memory with SQLite, injecting past turns as context into every LLM call",
+      "Bridged a React/Tauri frontend with a FastAPI backend handling transcription, reasoning, TTS, and cross-platform system control",
     ],
     links: {
       github: "https://github.com/VincentDev007/sydny-voice-assistant-automation-tool",
+      demo: "/projects/sydny.mp4",
     },
   },
   {
     id: "cerebra",
     title: "Cerebra",
     thumbnail: "/projects/cerebra.png",
-    shortDesc: "Offline notes app with full-text search and sticky notes.",
-    intro: "Cerebra is a privacy-focused desktop notes app built with Electron and React that works entirely offline. It features full-text search powered by SQLite FTS5 for instant results across thousands of notes, alongside a sticky notes system that persists layout and position locally.",
+    shortDesc: "Desktop notes app with full-text search and sticky notes.",
+    intro: "Cerebra is a desktop notes app built with Electron and React. It features full-text search powered by SQLite FTS5 for instant results, a nested folder system to keep things organized, and a sticky notes system — all stored locally with no account required.",
     version: "v0.5.0",
     tech: ["Electron", "React", "TypeScript", "SQLite"],
     stats: {
@@ -62,34 +63,14 @@ export const projects: Project[] = [
       status: "In Development",
     },
     highlights: [
-      "Built full-text search using SQLite FTS5, enabling instant search across thousands of notes",
-      "Implemented a sticky notes system with persistent positioning stored locally",
-      "Packaged as an offline-first Electron app with no account or internet required",
+      "Built FTS5 full-text search across notes and sticky notes, with SQL triggers keeping the index in sync automatically",
+      "Designed a nested folder system with cascade deletes and live item counts",
+      "Packaged as an Electron desktop app — no account, no internet, all data stored locally",
     ],
     links: {
       github: "https://github.com/VincentDev007/cerebra-notes-app",
+      demo: "/projects/cerebra.mp4",
     },
-  },
-  {
-    id: "fly",
-    title: "Fly",
-    thumbnail: "/projects/fly.png",
-    shortDesc: "Android flight finder with live search and saved flights.",
-    intro: "Fly is an Android app that lets users search for real-time flights using the Amadeus API, returning live results without a backend. Flights can be saved locally with Room for offline access, wrapped in a clean Material Design UI optimized for one-handed use.",
-    version: "Prototype",
-    tech: ["Kotlin", "Android", "Retrofit", "Room", "Material Design"],
-    stats: {
-      timeline: "1 Month",
-      role: "Sole Developer",
-      team: "Solo",
-      status: "Prototype",
-    },
-    highlights: [
-      "Built live flight search using Retrofit to consume the Amadeus API with real-time results",
-      "Implemented local saved flights with Room database for offline access",
-      "Designed a clean Material Design UI optimized for one-handed mobile use",
-    ],
-    links: {},
   },
 ];
 

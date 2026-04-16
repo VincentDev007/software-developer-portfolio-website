@@ -10,6 +10,8 @@ interface ProjectsRightProps {
 
 function VideoPlayer({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Ref instead of state so visibility can be read inside the src effect without re-renders
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -17,6 +19,7 @@ function VideoPlayer({ src }: { src: string }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
         if (entry.isIntersecting) {
           video.play();
         } else {
@@ -30,6 +33,14 @@ function VideoPlayer({ src }: { src: string }) {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    // Only reload when the video is visible — avoids loading offscreen videos on project switch
+    if (!video || !isVisibleRef.current) return;
+    video.load();
+    video.play().catch(() => {});
+  }, [src]);
+
   return (
     <video
       ref={videoRef}
@@ -41,6 +52,14 @@ function VideoPlayer({ src }: { src: string }) {
     />
   );
 }
+
+const styles = {
+  githubBtn:      { background: 'rgba(0,0,0,0.05)', border: '1.5px solid rgba(0,0,0,0.1)' },
+  techTag:        { background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.08)' },
+  videoContainer: { background: 'rgba(0,0,0,0.03)', border: '1.5px solid rgba(0,0,0,0.07)' },
+  statsGrid:      { border: '1.5px solid rgba(0,0,0,0.07)' },
+  noDemoIcon:     { background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.1)' },
+};
 
 export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightProps) {
   const activeId = selectedId ?? hoveredId;
@@ -59,7 +78,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
     <div className="flex flex-col gap-3">
 
       <div className="flex items-start justify-between gap-4">
-        <h1 className="text-[36px] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em]">
+        <h1 className="text-[24px] lg:text-[36px] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em]">
           {project.title}
         </h1>
         <div className="flex gap-2 flex-shrink-0 pt-1">
@@ -84,10 +103,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-[18px] py-[9px] text-[12px] font-semibold text-gray-700 rounded-[10px] transition-all"
-              style={{
-                background: 'rgba(0,0,0,0.05)',
-                border: '1.5px solid rgba(0,0,0,0.1)',
-              }}
+              style={styles.githubBtn}
             >
               ↗ GitHub
             </a>
@@ -100,10 +116,7 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
           <span
             key={t}
             className="text-[11px] font-semibold px-[10px] py-1 rounded-[7px] text-gray-600"
-            style={{
-              background: 'rgba(0,0,0,0.05)',
-              border: '1px solid rgba(0,0,0,0.08)',
-            }}
+            style={styles.techTag}
           >
             {t}
           </span>
@@ -115,22 +128,16 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
       </p>
 
       <div
-        className="w-full h-[340px] rounded-[12px] flex items-center justify-center mt-4"
-        style={{
-          background: 'rgba(0,0,0,0.03)',
-          border: '1.5px solid rgba(0,0,0,0.07)',
-        }}
+        className="w-full h-[220px] lg:h-[340px] rounded-[12px] flex items-center justify-center mt-4"
+        style={styles.videoContainer}
       >
         {project.links.demo ? (
-          <VideoPlayer src={project.links.demo} />
+          <VideoPlayer key={project.id} src={project.links.demo} />
         ) : (
           <div className="flex flex-col items-center gap-2 opacity-40">
             <div
               className="w-8 h-8 rounded-[8px] flex items-center justify-center text-[13px]"
-              style={{
-                background: 'rgba(0,0,0,0.06)',
-                border: '1px solid rgba(0,0,0,0.1)',
-              }}
+              style={styles.noDemoIcon}
             >
               ▶
             </div>
@@ -141,8 +148,8 @@ export default function ProjectsRight({ selectedId, hoveredId }: ProjectsRightPr
 
       {project.stats && (
         <div
-          className="w-full grid grid-cols-4 rounded-[12px] overflow-hidden"
-          style={{ border: '1.5px solid rgba(0,0,0,0.07)' }}
+          className="w-full grid grid-cols-2 lg:grid-cols-4 rounded-[12px] overflow-hidden"
+          style={styles.statsGrid}
         >
           {[
             { label: 'TIMELINE', value: project.stats.timeline },

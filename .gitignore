@@ -6,9 +6,7 @@ portfolio-website/.next/
 portfolio-website/out/
 
 # Environment files
-.env
-.env.local
-.env.production
+.env*
 
 # OS files
 .DS_Store
@@ -26,3 +24,10 @@ npm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
+portfolio-website/next-env.d.ts
+
+# Vercel
+portfolio-website/.vercel
+
+# Misc
+*.pem

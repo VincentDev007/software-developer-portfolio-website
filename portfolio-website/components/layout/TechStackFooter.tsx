@@ -12,6 +12,7 @@ export default function TechStackFooter() {
     const scroller = scrollRef.current;
     if (!container || !scroller) return;
 
+    // Pause the CSS animation when the footer scrolls out of view to save resources
     const observer = new IntersectionObserver(
       ([entry]) => {
         scroller.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
@@ -32,6 +33,7 @@ export default function TechStackFooter() {
         WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
       }}
     >
+      {/* Items duplicated twice so the seamless loop can scroll back to an identical copy */}
       <div ref={scrollRef} className="flex gap-12 animate-scroll">
         {[1, 2].map((copy) =>
           skills.map((skill) => (
