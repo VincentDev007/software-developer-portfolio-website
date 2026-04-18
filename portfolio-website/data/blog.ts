@@ -12,7 +12,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: 'sydny-behind-the-scenes',
     tag: 'Behind the Scenes',
-    date: 'October 4, 2025',
+    date: '',
     readTime: '0 min read',
     title: 'Sydny',
     summary: 'A look at how I built a desktop AI assistant — local LLM routing, persistent memory, and shipping a Tauri app from scratch.',
@@ -21,7 +21,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: 'cerebra-behind-the-scenes',
     tag: 'Behind the Scenes',
-    date: 'October 27, 2025',
+    date: '',
     readTime: '0 min read',
     title: 'Cerebra',
     summary: 'Behind the build — SQLite FTS5 search, nested folders, and why I chose Electron for Cerebra.',
