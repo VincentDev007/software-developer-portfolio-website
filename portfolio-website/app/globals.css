@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.shadow-overflow {
+  /* Clips horizontal overflow while allowing box-shadows to bleed out by 32px */
+  overflow-x: clip;
+  overflow-clip-margin: 32px;
+}
+
+@theme {
+  --animate-scroll: scroll 40s linear infinite;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  /* -50% because the list is duplicated — moving half the total width loops back to the start */
+  100% { transform: translateX(-50%); }
+}
+
+
+
+
